@@ -1,0 +1,13 @@
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Conn.resources
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.homePage.resources
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\BUTON\Desktop\Sigjuri\Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete

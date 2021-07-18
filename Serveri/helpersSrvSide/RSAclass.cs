@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Serveri.helpersSrvSide
 {
-    class RSA
+    class RSAclass
     {
         private RSACryptoServiceProvider objRSA;
         public byte[] publicKey;  
@@ -18,8 +18,8 @@ namespace Serveri.helpersSrvSide
                 {
                     this.objRSA = new RSACryptoServiceProvider();
                     this.publicKey = Encoding.UTF8.GetBytes(this.objRSA.ToXmlString(false));
-                    string key = this.objRSA.ToXmlString(false);
-                    Console.WriteLine(key);
+                    //string key = this.objRSA.ToXmlString(false);
+                    //Console.WriteLine(key);
 
                 }
                 catch (Exception e)
@@ -42,12 +42,10 @@ namespace Serveri.helpersSrvSide
 
         public string Decrypt(string cypherText)
         {
+            getRsaObj();
             byte[] byteCyphetText = Convert.FromBase64String(cypherText);
-
             return Encoding.UTF8.GetString(this.objRSA.Decrypt(byteCyphetText,true));
         }
-
-
 
 
 

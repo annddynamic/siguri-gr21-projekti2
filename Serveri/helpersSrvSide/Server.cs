@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using Serveri.helpersSrvSide;
@@ -12,13 +13,16 @@ namespace Serveri
     class Server
     {
         TcpListener server = null;
+        private RSAclass RSAobj;
         public byte[] publicKey;
-        public Server(string ip, int port, byte[] publicKey)
+        private byte[] CleintDesKey;
+        public Server(string ip, int port, byte[] publicKey, RSAclass obj)
         {
             IPAddress localAddr = IPAddress.Parse(ip);
             server = new TcpListener(localAddr, port);
             server.Start();
             this.publicKey = publicKey;
+            this.RSAobj = obj;
             StartListener();
         }
         public void StartListener()
@@ -50,7 +54,7 @@ namespace Serveri
             int i;
             try
             {
-                stream.Write(this.publicKey, 0, this.publicKey.Length);
+                //stream.Write(this.publicKey, 0, this.publicKey.Length);
 
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
@@ -60,7 +64,7 @@ namespace Serveri
 
                     string response = handleResponse(data);
                 /*    string str = "Hey Device!"*/;
-                    Byte[] reply = System.Text.Encoding.UTF8.GetBytes(response);
+                    Byte[] reply = Encoding.UTF8.GetBytes(response);
                     stream.Write(reply, 0, reply.Length);
                     Console.WriteLine("{1}: Sent: {0}", response, Thread.CurrentThread.ManagedThreadId);
                 }
@@ -75,26 +79,56 @@ namespace Serveri
 
          string handleResponse(String data)
         {
+            // dekriptoArben sdsdsdsdasdasd
             string response = string.Empty;
             switch (data)
             {
-                case "andi":
-                    response = andi();
+                case "firstConn":
+                    response = getPublicKey();
                     break;
-                
-                case null:
-                    response ="Jeni lidhur me sukses me server";
+                case "inserto":
+                    response = insertDB(data);
                     break;
-
+                default:
+                    response =dekriptoArben(data);
+                    break;
             }
 
             return response;
         }
 
-        string andi()
+        string getPublicKey()
         {
-            return "Andi andi";
+            return Encoding.UTF8.GetString(this.publicKey);
+            //return "AN";
         }
+
+
+        string dekriptoArben(string cipherText)
+        {
+
+            string response = this.RSAobj.Decrypt(cipherText);
+            return response;
+        }
+
+        string insertDB(string data)
+        {
+            // parsim
+            // keni mi nda
+            // db connection
+            // keni mi insert
+            //  OK
+            return "OK";
+        }
+
+
+
+
+
+
+
+
+
 
 
     }

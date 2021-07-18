@@ -49,7 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="helpersSrvSide\RSA.cs" />
+    <Compile Include="helpersSrvSide\RSAclass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="helpersSrvSide\Server.cs" />

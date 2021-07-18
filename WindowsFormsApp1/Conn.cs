@@ -27,6 +27,9 @@ namespace WindowsFormsApp1
 
         }
 
+        private void Conn_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }

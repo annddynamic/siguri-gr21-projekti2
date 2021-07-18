@@ -66,7 +66,7 @@
             this.textEmri.Location = new System.Drawing.Point(86, 120);
             this.textEmri.Multiline = true;
             this.textEmri.Name = "textEmri";
-            this.textEmri.Size = new System.Drawing.Size(138, 61);
+            this.textEmri.Size = new System.Drawing.Size(267, 136);
             this.textEmri.TabIndex = 2;
             // 
             // textBox2
@@ -95,7 +95,7 @@
             // 
             // textIV
             // 
-            this.textIV.Location = new System.Drawing.Point(86, 220);
+            this.textIV.Location = new System.Drawing.Point(86, 262);
             this.textIV.Multiline = true;
             this.textIV.Name = "textIV";
             this.textIV.Size = new System.Drawing.Size(138, 61);
@@ -130,7 +130,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(83, 200);
+            this.label5.Location = new System.Drawing.Point(46, 200);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(20, 17);
             this.label5.TabIndex = 10;
@@ -166,6 +166,7 @@
             this.Controls.Add(this.label1);
             this.Name = "homePage";
             this.Text = " ";
+            this.Load += new System.EventHandler(this.homePage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

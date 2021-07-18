@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
         private  TcpClient client;
         private String address;
         private Int32 port;
-        private RSACryptoServiceProvider objRsa;
+        private RSACryptoServiceProvider objRsa=new RSACryptoServiceProvider();
         public Client(String address, int port)
         {
             this.address = address;
@@ -26,8 +26,7 @@ namespace WindowsFormsApp1
                 try
                 {
                     this.client =  new TcpClient(this.address, this.port);
-                    createRSAObj();
-                    Console.WriteLine(objRsa.ToXmlString(false));
+                    //Console.WriteLine(objRsa.ToXmlString(false));
                 }
                 catch (Exception e)
                 {
@@ -39,17 +38,35 @@ namespace WindowsFormsApp1
 
         }
 
-        public void createRSAObj()
+        public string Encrypt(string plaintext)
         {
-            var client = getClient();
+            byte[] bytePLaintext = Encoding.UTF8.GetBytes(plaintext);
+            return Convert.ToBase64String(this.objRsa.Encrypt(bytePLaintext, true));
 
-            NetworkStream stream = client.GetStream();
-            byte[] key = new byte[2048];
-            Int32 bytes = stream.Read(key, 0, key.Length);
-            var response = Encoding.UTF8.GetString(key, 0, bytes);
+        }
 
-            this.objRsa.FromXmlString(response);
-            Console.WriteLine(response);
+        public string Decrypt(string cypherText)
+        {
+            byte[] byteCyphetText = Convert.FromBase64String(cypherText);
+            return Encoding.UTF8.GetString(this.objRsa.Decrypt(byteCyphetText, true));
+        }
+
+
+        //public RSACryptoServiceProvider createRSAObj()
+        //{
+
+        //}
+        public void createRSAObj(string key)
+        {
+            //var client = getClient();
+
+            //NetworkStream stream = client.GetStream();
+            //byte[] key = new byte[2048];
+            //Int32 bytes = stream.Read(key, 0, key.Length);
+            //var response = Encoding.UTF8.GetString(key, 0, bytes);
+
+            this.objRsa.FromXmlString(key);
+            //Console.WriteLine(key);
         }
         public string communicate(String message)
         {
@@ -78,7 +95,7 @@ namespace WindowsFormsApp1
             
 
             stream.Close();
-            client.Close();
+            //client.Close();
             return response;
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using WindowsFormsApp1.Helpers;
+using System.Text;
 
 namespace WindowsFormsApp1
 {
@@ -19,34 +20,18 @@ namespace WindowsFormsApp1
         public homePage(Client c)
         {
             InitializeComponent();
-            //string response = c.communicate("lesh");
+            c.createRSAObj();
 
-            CBC_DES desOb = new CBC_DES();
-            //textEmri.Text = "Kari pidhi mas mulliri";
-            string encrypted = desOb.Encrypt("Arben bukursohi");
+            string response = c.communicate("andi");
 
-            //textMbiemri.Text = encrypted;
-            //textIV.Text = BitConverter.ToString(desOb.getSharedIV());
-            //textKey.Text = BitConverter.ToString(desOb.getSharedIV());
+            //byte[] key = Encoding.UTF8.GetBytes(c.communicate("pershendetje"));
 
-            Console.WriteLine("Plaintext eshte kari pidhi mas mulliri");
-            Console.WriteLine("Ciphertext eshte " + encrypted);
-           
-            string decrypted = desOb.decrypt(encrypted);
-            Console.WriteLine("Plaintext eshte " + decrypted);
-            Console.WriteLine(decrypted);
 
-            textIV.Text = decrypted;
+            textEmri.Text =response ;
+
+            Console.WriteLine(response);
         }
 
-        private void homePage_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
+     
     }
 }

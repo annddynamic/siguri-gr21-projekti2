@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Serveri.helpersSrvSide;
+
 
 
 namespace Serveri
@@ -10,17 +12,20 @@ namespace Serveri
     class Server
     {
         TcpListener server = null;
-        public Server(string ip, int port)
+        public byte[] publicKey;
+        public Server(string ip, int port, byte[] publicKey)
         {
             IPAddress localAddr = IPAddress.Parse(ip);
             server = new TcpListener(localAddr, port);
             server.Start();
+            this.publicKey = publicKey;
             StartListener();
         }
         public void StartListener()
         {
             try
             {
+                
                 while (true)
                 {
                     Console.WriteLine("Waiting for a connection...");
@@ -45,6 +50,8 @@ namespace Serveri
             int i;
             try
             {
+                stream.Write(this.publicKey, 0, this.publicKey.Length);
+
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
                     //string hex = BitConverter.ToString(bytes);
@@ -71,8 +78,8 @@ namespace Serveri
             string response = string.Empty;
             switch (data)
             {
-                case "lesh":
-                    response = lesh();
+                case "andi":
+                    response = andi();
                     break;
                 
                 case null:
@@ -84,9 +91,9 @@ namespace Serveri
             return response;
         }
 
-        string lesh()
+        string andi()
         {
-            return "ti qifsha ropt";
+            return "Andi andi";
         }
 
 

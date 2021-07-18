@@ -60,7 +60,6 @@
             this.label2.Size = new System.Drawing.Size(60, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "plaintext";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // textEmri
             // 
@@ -167,7 +166,6 @@
             this.Controls.Add(this.label1);
             this.Name = "homePage";
             this.Text = " ";
-            this.Load += new System.EventHandler(this.homePage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

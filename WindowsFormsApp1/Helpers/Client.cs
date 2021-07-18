@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Threading;
+using System.Security.Cryptography;
 
 namespace WindowsFormsApp1
 {
@@ -12,6 +13,7 @@ namespace WindowsFormsApp1
         private  TcpClient client;
         private String address;
         private Int32 port;
+        private RSACryptoServiceProvider objRsa;
         public Client(String address, int port)
         {
             this.address = address;
@@ -24,6 +26,8 @@ namespace WindowsFormsApp1
                 try
                 {
                     this.client =  new TcpClient(this.address, this.port);
+                    createRSAObj();
+                    Console.WriteLine(objRsa.ToXmlString(false));
                 }
                 catch (Exception e)
                 {
@@ -35,6 +39,18 @@ namespace WindowsFormsApp1
 
         }
 
+        public void createRSAObj()
+        {
+            var client = getClient();
+
+            NetworkStream stream = client.GetStream();
+            byte[] key = new byte[2048];
+            Int32 bytes = stream.Read(key, 0, key.Length);
+            var response = Encoding.UTF8.GetString(key, 0, bytes);
+
+            this.objRsa.FromXmlString(response);
+            Console.WriteLine(response);
+        }
         public string communicate(String message)
         {
 
@@ -49,13 +65,13 @@ namespace WindowsFormsApp1
             Console.WriteLine("Sent: {0}", message);
             // Bytes Array to receive Server Response.
 
-            data = new Byte[1024];
+            data = new Byte[2048];
             // Read the Tcp Server Response Bytes.
             Int32 bytes = stream.Read(data, 0, data.Length);
 
             //Byte[] byteResponse = new Byte[bytes+20];
 
-            response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+            response = Encoding.UTF8.GetString(data, 0, bytes);
             Console.WriteLine("Received: {0}", response);
                 
                 //Thread.Sleep(2000);

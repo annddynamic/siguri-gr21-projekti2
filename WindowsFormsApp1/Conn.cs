@@ -20,7 +20,6 @@ namespace WindowsFormsApp1
             String host = txtHost.Text;
             int port = Int32.Parse(txtPort.Text);           
             Client client = new Client(host, port);
-
            
             homePage hp = new homePage(client);
             this.Hide();

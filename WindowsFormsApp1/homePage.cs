@@ -19,21 +19,24 @@ namespace WindowsFormsApp1
         public homePage(Client c)
         {
             InitializeComponent();
-            string response = c.communicate("lesh");
+            //string response = c.communicate("lesh");
 
             CBC_DES desOb = new CBC_DES();
-            textEmri.Text = "Kari pidhi mas mulliri";
-            string encrypted = desOb.Encrypt("Kari pidhi mas mulliri");
+            //textEmri.Text = "Kari pidhi mas mulliri";
+            string encrypted = desOb.Encrypt("Arben bukursohi");
 
-            textMbiemri.Text = encrypted;
-            textIV.Text = BitConverter.ToString(desOb.getSharedIV());
-            textKey.Text = BitConverter.ToString(desOb.getSharedIV());
+            //textMbiemri.Text = encrypted;
+            //textIV.Text = BitConverter.ToString(desOb.getSharedIV());
+            //textKey.Text = BitConverter.ToString(desOb.getSharedIV());
 
-            //Console.WriteLine(BitConverter.ToString(desOb.getSharedIV());
-            //Console.WriteLine(BitConverter.ToString(desOb.getSharedKey());
+            Console.WriteLine("Plaintext eshte kari pidhi mas mulliri");
+            Console.WriteLine("Ciphertext eshte " + encrypted);
+           
+            string decrypted = desOb.decrypt(encrypted);
+            Console.WriteLine("Plaintext eshte " + decrypted);
+            Console.WriteLine(decrypted);
 
-
-
+            textIV.Text = decrypted;
         }
 
         private void homePage_Load(object sender, EventArgs e)

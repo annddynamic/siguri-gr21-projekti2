@@ -29,6 +29,12 @@ namespace WindowsFormsApp1.Helpers
                 try
                 {
                     this.objDes = new DESCryptoServiceProvider();
+                    this.objDes.GenerateKey();
+                    this.objDes.GenerateIV();
+                    this.sharedKey = this.objDes.Key;
+                    this.sharedIV = this.objDes.IV;
+                    this.objDes.Mode = CipherMode.CBC;
+                    this.objDes.Padding = PaddingMode.Zeros;
                 }
                 catch (Exception e)
                 {
@@ -42,17 +48,11 @@ namespace WindowsFormsApp1.Helpers
         public string Encrypt(String plaintext)
         {
             byte[] bytePlaintext = Encoding.UTF8.GetBytes(plaintext);
-            DESCryptoServiceProvider desObj = this.getDesObj();
-            desObj.GenerateKey();
-            desObj.GenerateIV();
-
-            this.sharedKey = desObj.Key;
-            this.sharedIV = desObj.IV;
-            desObj.Mode = CipherMode.CBC;
-            desObj.Padding = PaddingMode.PKCS7;
+            DESCryptoServiceProvider desObj = this.getDesObj(); 
 
             MemoryStream ms = new MemoryStream();
             CryptoStream cs = new CryptoStream(ms, desObj.CreateEncryptor(this.sharedKey,this.sharedIV), CryptoStreamMode.Write);
+           
             cs.Write(bytePlaintext, 0, bytePlaintext.Length);
             cs.Close();
 
@@ -61,8 +61,26 @@ namespace WindowsFormsApp1.Helpers
         
         }
 
+        public string decrypt(string ciphertext)
+        {
+            byte[] byteciphertext = Convert.FromBase64String(ciphertext);
 
+            DESCryptoServiceProvider desObj = this.getDesObj();
 
+            MemoryStream ms = new MemoryStream(byteciphertext);
+            byte[] byteDecryptedText = new byte[ms.Length];
+
+            CryptoStream cs = new CryptoStream(ms, desObj.CreateDecryptor(this.sharedKey, this.sharedIV), CryptoStreamMode.Read);
+            
+            cs.Read(byteDecryptedText, 0, byteDecryptedText.Length);        
+            cs.Close();
+
+            //return Convert.ToBase64String(byteDecryptedText);
+
+            return Encoding.UTF8.GetString(byteDecryptedText);
+        
+
+        }
 
     }
 }

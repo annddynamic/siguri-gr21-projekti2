@@ -40,7 +40,6 @@ namespace Serveri
         {
             TcpClient client = (TcpClient)obj;
             var stream = client.GetStream();
-            string imei = String.Empty;
             string data = null;
             Byte[] bytes = new Byte[256];
             int i;
@@ -48,7 +47,7 @@ namespace Serveri
             {
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
-                    string hex = BitConverter.ToString(bytes);
+                    //string hex = BitConverter.ToString(bytes);
                     data = Encoding.UTF8.GetString(bytes, 0, i);
                     Console.WriteLine("{1}: Received: {0}", data, Thread.CurrentThread.ManagedThreadId);
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Threading;
 using System.Security.Cryptography;
+using WindowsFormsApp1.Helpers;
 
 namespace WindowsFormsApp1
 {
@@ -14,6 +15,7 @@ namespace WindowsFormsApp1
         private String address;
         private Int32 port;
         private RSACryptoServiceProvider objRsa=new RSACryptoServiceProvider();
+        private CBC_DES DESobj = new CBC_DES();
         public Client(String address, int port)
         {
             this.address = address;
@@ -51,31 +53,44 @@ namespace WindowsFormsApp1
             return Encoding.UTF8.GetString(this.objRsa.Decrypt(byteCyphetText, true));
         }
 
-
-        //public RSACryptoServiceProvider createRSAObj()
-        //{
-
-        //}
         public void createRSAObj(string key)
         {
-            //var client = getClient();
-
-            //NetworkStream stream = client.GetStream();
-            //byte[] key = new byte[2048];
-            //Int32 bytes = stream.Read(key, 0, key.Length);
-            //var response = Encoding.UTF8.GetString(key, 0, bytes);
-
+            
             this.objRsa.FromXmlString(key);
-            //Console.WriteLine(key);
         }
+
+        public bool keyExchange()
+        {
+            string response = communicate("firstConn");
+            createRSAObj(response);
+
+            
+            DESCryptoServiceProvider obj = this.DESobj.getDesObj();
+            Console.WriteLine(BitConverter.ToString(this.DESobj.getSharedKey()));
+            Console.WriteLine("Des key para enkriptimit dhe dergimit ne srv: " + Encoding.UTF8.GetString(DESobj.getSharedKey()));
+            String encryptDesKey = Encrypt(Encoding.UTF8.GetString(DESobj.getSharedKey()));
+
+            String decryptedDesKey = communicate("keyExchange"+encryptDesKey);
+
+            if (Encoding.UTF8.GetString(DESobj.getSharedKey())==decryptedDesKey)
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+            
+        }
+
+
         public string communicate(String message)
         {
 
-            //TcpClient client = new TcpClient(server, port);
+            // e mer tcp klientin
             TcpClient client = getClient();
             NetworkStream stream = this.client.GetStream();
             string response=String.Empty;
-            //  the Message into ASCII.
+            //  the Message into UTF8.
             Byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
             // Send the message to the connected TcpServer. 
             stream.Write(data, 0, data.Length);
@@ -94,7 +109,7 @@ namespace WindowsFormsApp1
                 //Thread.Sleep(2000);
             
 
-            stream.Close();
+            //stream.Close();
             //client.Close();
             return response;
         }

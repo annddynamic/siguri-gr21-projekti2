@@ -13,7 +13,7 @@ public class Program
         Thread t = new Thread(delegate ()
         {
             // replace the IP with your system IP Address...
-            var objrsa = new RSAclass();
+            RSAclass objrsa = new RSAclass();
             objrsa.getRsaObj();
             Console.WriteLine(Encoding.UTF8.GetString(objrsa.publicKey));
             Server myserver = new Server("127.0.0.1", 13000, objrsa.publicKey, objrsa);
@@ -24,10 +24,6 @@ public class Program
 
         Console.WriteLine("Server Started...!");
         
-        //var plainText = "Andi";
-        //var encrypted = objRsa.Encrypt(plainText);
-        //Console.WriteLine(encrypted);
-        //Console.WriteLine(objRsa.Decrypt(encrypted));
 
     }
 

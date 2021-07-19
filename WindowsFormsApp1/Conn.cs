@@ -18,12 +18,21 @@ namespace WindowsFormsApp1
         private void buttonConn_Click(object sender, EventArgs e)
         {
             String host = txtHost.Text;
-            int port = Int32.Parse(txtPort.Text);           
+            int port = Int32.Parse(txtPort.Text);
             Client client = new Client(host, port);
-           
-            homePage hp = new homePage(client);
-            this.Hide();
-            hp.Show();
+
+            if (client.keyExchange())
+            {
+                homePage hp = new homePage(client);
+                this.Hide();
+                hp.Show();
+
+            }
+            else
+            {
+                
+            }
+
 
         }
 

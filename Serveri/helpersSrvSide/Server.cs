@@ -81,26 +81,54 @@ namespace Serveri
         {
             // dekriptoArben sdsdsdsdasdasd
             string response = string.Empty;
-            switch (data)
-            {
-                case "firstConn":
-                    response = getPublicKey();
-                    break;
-                case "inserto":
-                    response = insertDB(data);
-                    break;
-                default:
-                    response =dekriptoArben(data);
-                    break;
-            }
 
-            return response;
+
+            if (data == "firstConn")
+            {
+                response = getPublicKey();
+
+            }
+            else if (data.Substring(0, 11) == "keyExchange")
+            {
+                response = dekriptoArben(data.Substring(11));
+            }
+            else
+            {
+                response = "error";
+            }
+                //if (data == "firstConn")
+                //{
+                //    response = getPublicKey();
+
+                //}else if(data.Substring(0,11)== "keyExchange") {
+                //    response = dekriptoArben(data.Substring(11));
+                //else
+                //    {
+                //        response = "error";
+                //    }
+
+
+                //switch (data)
+                //{
+                //    case "firstConn":
+                //        response = getPublicKey();
+                //        break;
+
+                //    case "inserto":
+                //        response = insertDB(data);
+                //        break;
+                //    default:
+                //        response =dekriptoArben(data);
+                //        break;
+                //}
+
+                return response;
         }
 
         string getPublicKey()
         {
             return Encoding.UTF8.GetString(this.publicKey);
-            //return "AN";
+           
         }
 
 
@@ -108,6 +136,7 @@ namespace Serveri
         {
 
             string response = this.RSAobj.Decrypt(cipherText);
+            this.CleintDesKey = Encoding.UTF8.GetBytes(response);
             return response;
         }
 

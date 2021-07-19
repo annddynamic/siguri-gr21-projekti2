@@ -7,7 +7,7 @@ namespace Serveri.helpersSrvSide
     class RSAclass
     {
         private RSACryptoServiceProvider objRSA;
-        public byte[] publicKey;  
+        public byte[] publicKey;
         
 
         public RSACryptoServiceProvider getRsaObj()
@@ -34,7 +34,7 @@ namespace Serveri.helpersSrvSide
 
         public string Encrypt(string plaintext)
         {
-            getRsaObj();
+            this.objRSA =getRsaObj();
             byte[] bytePLaintext = Encoding.UTF8.GetBytes(plaintext);
             return Convert.ToBase64String(this.objRSA.Encrypt(bytePLaintext, true));
 
@@ -42,11 +42,10 @@ namespace Serveri.helpersSrvSide
 
         public string Decrypt(string cypherText)
         {
-            getRsaObj();
+            this.objRSA = getRsaObj();
             byte[] byteCyphetText = Convert.FromBase64String(cypherText);
             return Encoding.UTF8.GetString(this.objRSA.Decrypt(byteCyphetText,true));
         }
-
 
 
     }

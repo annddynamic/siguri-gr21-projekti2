@@ -20,32 +20,12 @@ namespace WindowsFormsApp1
         public homePage(Client c)
         {
             InitializeComponent();
-            //c.createRSAObj();
 
-            string response = c.communicate("firstConn");
-            c.createRSAObj(response);
-
-            //byte[] key = Encoding.UTF8.GetBytes(c.communicate("pershendetje"));
-
-
-            textEmri.Text =response ;
-
-
-            string plaintext= "Arben Dedaj";
-            string ciphertxt =c.Encrypt(plaintext);
-            //string decrypted = c.communicate
-
-            Console.WriteLine(plaintext);
-            Console.WriteLine(ciphertxt);
-
-            Client client = new Client("127.0.0.1", 13000);
-
-
-            string plaintextFromSrv = client.communicate(ciphertxt);
-            Console.WriteLine(plaintextFromSrv);
+            //string encrypted = c.encryptDES("asd");
 
 
 
+            
         }
 
         private void homePage_Load(object sender, EventArgs e)

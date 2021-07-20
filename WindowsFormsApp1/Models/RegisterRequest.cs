@@ -8,6 +8,13 @@ namespace WindowsFormsApp1.Models
 {  
    
    
+    public class RegisterReq
+    {
+        public string call { get; set; }
+        public Person person;
+
+    }
+
     [Serializable]
      public class Person
     {

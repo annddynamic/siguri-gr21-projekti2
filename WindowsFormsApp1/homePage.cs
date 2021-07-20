@@ -30,8 +30,7 @@ namespace WindowsFormsApp1
         {
 
 
-            
-
+         
             RegisterReq regReq = new RegisterReq()
             {
                 call = "register",

@@ -197,6 +197,7 @@ namespace Serveri
             }
             else if (obj.call == "register")
             {
+                
                 response = insertUsers(obj.person);
             }
          
@@ -253,7 +254,7 @@ namespace Serveri
 
         }
 
-        string insertUsers(Person obj)
+        string insertUsers(dynamic obj)
         {
 
 

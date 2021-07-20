@@ -65,7 +65,7 @@
       <DependentUpon>homePage.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\InitialRequest.cs" />
-    <Compile Include="Models\RegisterReq.cs" />
+    <Compile Include="Models\RegisterRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Conn.resx">

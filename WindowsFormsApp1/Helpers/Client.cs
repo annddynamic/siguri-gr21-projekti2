@@ -52,9 +52,15 @@ namespace WindowsFormsApp1
             return Convert.ToBase64String(this.objRsa.Encrypt(bytePLaintext, true));
 
         }
-      
+        //public string Encrypt(string plaintext)
+        //{
+        //    byte[] bytePLaintext = Encoding.Unicode.GetBytes(plaintext);
+        //    return Convert.ToBase64String(this.objRsa.Encrypt(bytePLaintext, true));
 
- 
+
+        //}
+
+     
         public void createRSAObj(string key)
         {
             Console.WriteLine("createRSAObject " + key);
@@ -111,10 +117,13 @@ namespace WindowsFormsApp1
 
             return JsonConvert.DeserializeObject<dynamic>(JSON);
             //return jResponse;
+             
         }
 
+        
 
-        public void register(RegisterReq preg)
+
+        public void register(RegisterReq  preg)
         {
             // serializimi obj -> string
             // t dhenat i dergon si json (string)

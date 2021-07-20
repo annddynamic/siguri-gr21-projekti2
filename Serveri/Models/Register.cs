@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Serveri.Models
 {
-    [Serializable]
-    class Register
-    {
-        public string call { get; set; }
-        public Person person;
-    }
+    
+   
 
     [Serializable]
     public class Person

@@ -45,19 +45,16 @@ namespace WindowsFormsApp1
 
         }
 
-        public string Encrypt(string plaintext)
+
+        public string Encrypt_DesKey(string plaintext)
         {
-            byte[] bytePLaintext = Encoding.UTF8.GetBytes(plaintext);
+            byte[] bytePLaintext = Encoding.Unicode.GetBytes(plaintext);
             return Convert.ToBase64String(this.objRsa.Encrypt(bytePLaintext, true));
 
         }
+      
 
-        public string Decrypt(string cypherText)
-        {
-            byte[] byteCyphetText = Convert.FromBase64String(cypherText);
-            return Encoding.UTF8.GetString(this.objRsa.Decrypt(byteCyphetText, true));
-        }
-
+ 
         public void createRSAObj(string key)
         {
             Console.WriteLine("createRSAObject " + key);
@@ -74,23 +71,29 @@ namespace WindowsFormsApp1
             string json = JsonConvert.SerializeObject(req2);
 
             var srvObj = communicate(json);
-            
+
+            Console.WriteLine("Public Key: " + this.objRsa);
             createRSAObj(srvObj.publicKey.ToString());
 
 
             DESCryptoServiceProvider obj = this.DESobj.getDesObj();
-            
-            Console.WriteLine("Celesi Des pa enkript KLIENTII: " + Encoding.UTF8.GetString(DESobj.getSharedKey()));
-            Console.WriteLine("IV Des " + Encoding.UTF8.GetString(DESobj.getSharedIV()));
 
-            string encryptedDesKey = Encrypt(Encoding.UTF8.GetString(DESobj.getSharedKey()));
+
+            byte[] desKey = DESobj.getSharedKey();
+
             byte[] sharedIV = DESobj.getSharedIV();
+
+            string encryptedDesKey = Encrypt_DesKey(Encoding.Unicode.GetString(desKey));
+
+            Console.WriteLine("Celesi des pa enkript Klient " + BitConverter.ToString(desKey));
+            Console.WriteLine("IV pa enkritp Klient " + BitConverter.ToString(sharedIV));
 
             InitialRequest req = new InitialRequest()
             {
                 call = "keyExchange",
-                desIV = Encoding.UTF8.GetString(sharedIV),
-                desKeyEnc = encryptedDesKey
+                desIV = sharedIV,
+                desKeyEnc = encryptedDesKey,
+                test = "Andi"
             };
 
             json = JsonConvert.SerializeObject(req);
@@ -98,14 +101,7 @@ namespace WindowsFormsApp1
 
             var response = communicate(json);
 
-
-            if(response.clientDesKey.ToString()== Encoding.UTF8.GetString(DESobj.getSharedKey()))
-            {
-                return true;
-            }
-
-
-            return false;
+            return true;
 
         }
 
@@ -117,6 +113,19 @@ namespace WindowsFormsApp1
             //return jResponse;
         }
 
+
+        public void register(RegisterReq preg)
+        {
+            // serializimi obj -> string
+            // t dhenat i dergon si json (string)
+            string  json = JsonConvert.SerializeObject(preg);
+            string encryptedJsonCBC = this.DESobj.Encrypt(json);
+
+            //Console.WriteLine(json);
+            Console.WriteLine(encryptedJsonCBC);
+            Console.WriteLine(this.DESobj.decrypt(encryptedJsonCBC));
+            communicate(encryptedJsonCBC);
+        }
 
 
         public dynamic  communicate(String message)
@@ -133,7 +142,7 @@ namespace WindowsFormsApp1
             string encodedStr = Convert.ToBase64String(Encoding.UTF8.GetBytes(message));
             //Console.WriteLine("Kerkesa e klientit: \n" + message);
             //Console.WriteLine("encodedbase64 string: \n" + encodedStr);
-            
+
             stream.Write(Encoding.UTF8.GetBytes(encodedStr), 0, Encoding.UTF8.GetBytes(encodedStr).Length);
 
             //Console.WriteLine("------------------------------------------------------------- \n");

@@ -40,11 +40,19 @@ namespace Serveri.helpersSrvSide
 
         }
 
+        //public string Decrypt_(string cypherText)
+        //{
+        //    this.objRSA = getRsaObj();
+        //    byte[] byteCyphetText = Convert.FromBase64String(cypherText);
+        //    return Encoding.UTF8.GetString(this.objRSA.Decrypt(byteCyphetText, true));
+        //}
+
+
         public string Decrypt(string cypherText)
         {
             this.objRSA = getRsaObj();
             byte[] byteCyphetText = Convert.FromBase64String(cypherText);
-            return Encoding.UTF8.GetString(this.objRSA.Decrypt(byteCyphetText,true));
+            return Encoding.Unicode.GetString(this.objRSA.Decrypt(byteCyphetText,true));
         }
 
 

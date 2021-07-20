@@ -11,8 +11,10 @@ namespace Serveri.Models
 
     class SrvInitial
     {
+        public string response { get; set; }
+
         public string publicKey { get; set; }
-        public string clientDesIV { get; set; }
-        public string clientDesKey { get; set; }
+        public byte[] clientDesIV { get; set; }
+        public byte[] clientDesKey { get; set; }
     }
 }

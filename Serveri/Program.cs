@@ -12,12 +12,9 @@ public class Program
     {
         Thread t = new Thread(delegate ()
         {
-            // replace the IP with your system IP Address...
             RSAclass objrsa = new RSAclass();
             objrsa.getRsaObj();
-            //Console.WriteLine(Encoding.UTF8.GetString(objrsa.publicKey));
             Server myserver = new Server("127.0.0.1", 13000, objrsa.publicKey, objrsa);
-
 
         });
         t.Start();

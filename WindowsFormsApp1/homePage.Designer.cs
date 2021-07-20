@@ -40,6 +40,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtMbiemri = new System.Windows.Forms.Label();
+            this.Send = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -145,6 +146,16 @@
             this.txtMbiemri.TabIndex = 11;
             this.txtMbiemri.Text = "cipher";
             // 
+            // Send
+            // 
+            this.Send.Location = new System.Drawing.Point(107, 464);
+            this.Send.Name = "Send";
+            this.Send.Size = new System.Drawing.Size(138, 56);
+            this.Send.TabIndex = 12;
+            this.Send.Text = "Send";
+            this.Send.UseVisualStyleBackColor = true;
+            this.Send.Click += new System.EventHandler(this.button1_Click);
+            // 
             // homePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -152,6 +163,7 @@
             this.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.bckg2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(671, 588);
+            this.Controls.Add(this.Send);
             this.Controls.Add(this.txtMbiemri);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -165,8 +177,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "homePage";
-            this.Text = " ";
-            this.Load += new System.EventHandler(this.homePage_Load);
+            this.Text = " Send";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,5 +197,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label txtMbiemri;
+        private System.Windows.Forms.Button Send;
     }
 }

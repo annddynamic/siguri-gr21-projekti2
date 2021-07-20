@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using Serveri.helpersSrvSide;
 using Newtonsoft.Json;
 using Serveri.Models;
+using Newtonsoft.Json.Schema;
+using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace Serveri
 {
@@ -16,8 +19,8 @@ namespace Serveri
         TcpListener server = null;
         private RSAclass RSAobj;
         public byte[] publicKey;
-        private string CleintDesKey;
-        private string CleintIV;
+        private byte[] CleintDesKey;
+        private byte[] CleintIV;
         public Server(string ip, int port, byte[] publicKey, RSAclass obj)
         {
             IPAddress localAddr = IPAddress.Parse(ip);
@@ -68,7 +71,7 @@ namespace Serveri
                     
                     Console.WriteLine("-------------------------------------------------------------\n");
                     dataBase64 = Encoding.UTF8.GetString(bytes, 0, i);
-                    //Console.WriteLine("qitu vjen base 64 Response klientit: \n" + dataBase64+"\n");
+                    //Console.WriteLine("qitu vjen base 64 Response klientit: \n" + dataBase64 + "\n");
                     string decodeString = Encoding.UTF8.GetString(Convert.FromBase64String(dataBase64));
                     Console.WriteLine("qitu vjen i dekodum kerkesa prej klientit ne server: \n" + decodeString);
 
@@ -104,12 +107,78 @@ namespace Serveri
 
         private dynamic deserializeJSON(string JSON)
         {
-        
+
+            if (!IsValidJson(JSON)){
+
+                string decryptedJson = decrypt(JSON, this.CleintDesKey, this.CleintIV);
+                return JsonConvert.DeserializeObject<dynamic>(decryptedJson);
+
+
+            }
+            
             return  JsonConvert.DeserializeObject<dynamic>(JSON);
             //return jResponse;
+        
         }
 
-         string handleResponse(dynamic obj)
+        public string decrypt(string ciphertext, byte[] clientDesKey, byte[] clientDesIV)
+        {
+            byte[] byteciphertext = Convert.FromBase64String(ciphertext);
+
+            DESCryptoServiceProvider desObj = new DESCryptoServiceProvider();
+
+            desObj.Mode = CipherMode.CBC;
+            desObj.Padding = PaddingMode.Zeros;
+            desObj.Key = this.CleintDesKey;
+            desObj.IV = this.CleintIV;
+
+      
+            MemoryStream ms = new MemoryStream(byteciphertext);
+            byte[] byteDecryptedText = new byte[ms.Length];
+
+            CryptoStream cs = new CryptoStream(ms, desObj.CreateDecryptor(clientDesKey, clientDesIV), CryptoStreamMode.Read);
+
+            cs.Read(byteDecryptedText, 0, byteDecryptedText.Length);
+            cs.Close();
+
+
+            return Encoding.UTF8.GetString(byteDecryptedText);
+
+        }
+
+
+
+        private  bool IsValidJson(string strInput)
+        {
+            if (string.IsNullOrWhiteSpace(strInput)) { return false; }
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    var obj = JToken.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    //Exception in parsing json
+                    Console.WriteLine(jex.Message);
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        string handleResponse(dynamic obj)
         {
             // dekriptoArben sdsdsdsdasdasd
             string response = string.Empty;
@@ -117,6 +186,7 @@ namespace Serveri
 
             if (obj.call == "firstConn")
             {
+                Console.WriteLine("Key: " + getPublicKey());
                 response = getPublicKey();
 
             }
@@ -125,9 +195,9 @@ namespace Serveri
                 //response = keyExchange(data.Substring(11));
                 response = keyExchange(obj);
             }
-            else
+            else if (obj.call == "register")
             {
-                response = "error";
+                response = insertUsers(obj.person);
             }
          
                 return response;
@@ -152,15 +222,30 @@ namespace Serveri
         {
 
 
-            string desDecryptedKey = RSAobj.Decrypt(obj.desKeyEnc.ToString());
+            InitialRequestClient ob = new InitialRequestClient
+            {
+                call = obj.call,
+                desIV = obj.desIV,
+                desKeyEnc= obj.desKeyEnc,
+                test = obj.test
+            };
+
+            byte[] desDecryptedKey = Encoding.Unicode.GetBytes(RSAobj.Decrypt(ob.desKeyEnc));
+
             this.CleintDesKey = desDecryptedKey;
-            this.CleintIV = obj.desIV.ToString();
-            //Console.WriteLine("Prej serverit " + desDecryptedKey);
+            this.CleintIV = ob.desIV;
+            
+
+
+            Console.WriteLine("Prej serverit Celesi " + BitConverter.ToString(this.CleintDesKey));
+            Console.WriteLine("Prej serverit  IV " + BitConverter.ToString(this.CleintIV));
+
 
             SrvInitial sv = new SrvInitial()
             {
-                clientDesKey = this.CleintDesKey,
-                clientDesIV = this.CleintIV,
+                response="OK",
+                //clientDesKey = this.CleintDesKey,
+                //clientDesIV = this.CleintIV,
 
             };
 
@@ -168,9 +253,22 @@ namespace Serveri
 
         }
 
+        string insertUsers(Person obj)
+        {
 
 
+            SrvInitial sv = new SrvInitial()
+            {
+                response = "OK",
+                //clientDesKey = this.CleintDesKey,
+                //clientDesIV = this.CleintIV,
 
+            };
+
+            return JsonConvert.SerializeObject(sv);
+
+
+        }
 
 
 

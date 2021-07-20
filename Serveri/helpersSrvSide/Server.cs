@@ -4,9 +4,10 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
 using Serveri.helpersSrvSide;
-
-
+using Newtonsoft.Json;
+using Serveri.Models;
 
 namespace Serveri
 {
@@ -16,6 +17,7 @@ namespace Serveri
         private RSAclass RSAobj;
         public byte[] publicKey;
         private byte[] CleintDesKey;
+        private byte[] CleintIV;
         public Server(string ip, int port, byte[] publicKey, RSAclass obj)
         {
             IPAddress localAddr = IPAddress.Parse(ip);
@@ -49,8 +51,8 @@ namespace Serveri
         {
             TcpClient client = (TcpClient)obj;
             var stream = client.GetStream();
-            string data = null;
-            Byte[] bytes = new Byte[256];
+            string dataBase64 = null;
+            Byte[] bytes = new Byte[1048];
             int i;
             try
             {
@@ -58,15 +60,38 @@ namespace Serveri
 
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
-                    //string hex = BitConverter.ToString(bytes);
-                    data = Encoding.UTF8.GetString(bytes, 0, i);
-                    Console.WriteLine("{1}: Received: {0}", data, Thread.CurrentThread.ManagedThreadId);
+                    // te dhenat base 64 string nga kleinti
+                    //  string mesazhin -> bajta
+                    // bajtat -> string64
+                    // string64 -> bajta
+                    // bajta->>>>>>
+                    
+                    Console.WriteLine("-------------------------------------------------------------\n");
+                    dataBase64 = Encoding.UTF8.GetString(bytes, 0, i);
+                    //Console.WriteLine("qitu vjen base 64 Response klientit: \n" + dataBase64+"\n");
+                    string decodeString = Encoding.UTF8.GetString(Convert.FromBase64String(dataBase64));
+                    Console.WriteLine("qitu vjen i dekodum kerkesa prej klientit ne server: \n" + decodeString);
 
-                    string response = handleResponse(data);
-                /*    string str = "Hey Device!"*/;
-                    Byte[] reply = Encoding.UTF8.GetBytes(response);
-                    stream.Write(reply, 0, reply.Length);
-                    Console.WriteLine("{1}: Sent: {0}", response, Thread.CurrentThread.ManagedThreadId);
+                    Console.WriteLine("------------------------------------------------------------- \n");
+
+
+                    var objDesirialized =deserializeJSON(decodeString);
+                    string response = handleResponse(objDesirialized);
+
+                 
+
+
+                    Console.WriteLine("-------------------------------------------------------------\n");
+
+                    Console.WriteLine("qitu vjen  response prej serverit: \n" + response+"\n");
+                    string encodedStr = Convert.ToBase64String(Encoding.UTF8.GetBytes(response));
+                    //Console.WriteLine("encodedbase64 string Response prej serverit: \n" + encodedStr);
+
+                    stream.Write(Encoding.UTF8.GetBytes(encodedStr), 0, Encoding.UTF8.GetBytes(encodedStr).Length);
+
+                    Console.WriteLine("-------------------------------------------------------------\n");
+
+                    
                 }
             }
             catch (Exception e)
@@ -77,87 +102,80 @@ namespace Serveri
         }
 
 
-         string handleResponse(String data)
+        private dynamic deserializeJSON(string JSON)
+        {
+        
+            return  JsonConvert.DeserializeObject<dynamic>(JSON);
+            //return jResponse;
+        }
+
+         string handleResponse(dynamic obj)
         {
             // dekriptoArben sdsdsdsdasdasd
             string response = string.Empty;
 
 
-            if (data == "firstConn")
+            if (obj.call == "firstConn")
             {
                 response = getPublicKey();
 
             }
-            else if (data.Substring(0, 11) == "keyExchange")
+            else if (obj.call == "keyExchange")
             {
-                response = dekriptoArben(data.Substring(11));
+                //response = keyExchange(data.Substring(11));
+                response = keyExchange(obj);
             }
             else
             {
                 response = "error";
             }
-                //if (data == "firstConn")
-                //{
-                //    response = getPublicKey();
-
-                //}else if(data.Substring(0,11)== "keyExchange") {
-                //    response = dekriptoArben(data.Substring(11));
-                //else
-                //    {
-                //        response = "error";
-                //    }
-
-
-                //switch (data)
-                //{
-                //    case "firstConn":
-                //        response = getPublicKey();
-                //        break;
-
-                //    case "inserto":
-                //        response = insertDB(data);
-                //        break;
-                //    default:
-                //        response =dekriptoArben(data);
-                //        break;
-                //}
-
+         
                 return response;
         }
 
+        
         string getPublicKey()
         {
-            return Encoding.UTF8.GetString(this.publicKey);
-           
+
+            SrvInitial sv = new SrvInitial()
+            {
+                publicKey = Encoding.UTF8.GetString(this.publicKey),
+                
+            };
+            
+
+            return JsonConvert.SerializeObject(sv);
         }
 
 
-        string dekriptoArben(string cipherText)
+        string keyExchange(dynamic obj)
         {
 
-            string response = this.RSAobj.Decrypt(cipherText);
-            this.CleintDesKey = Encoding.UTF8.GetBytes(response);
-            return response;
-        }
+            /*this.CleintDesKey = obj.desKeyEnc*/;
 
-        string insertDB(string data)
-        {
-            // parsim
-            // keni mi nda
-            // db connection
-            // keni mi insert
-            //  OK
+
+
+            //Console.WriteLine(obj);
+
+
+            //Console.WriteLine(obj.desKeyEnc);
+
+            //string desDecryptedKey = RSA
+            //string desDecryptedKey = RSAobj.Decrypt(obj.desKeyEnc.toString());
+
+            //Console.WriteLine("Prej serverit " + desDecryptedKey);
+
+
+
+
             return "OK";
+
         }
 
 
 
 
-
-
-
-
-
+        
 
 
     }

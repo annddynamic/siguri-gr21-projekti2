@@ -57,12 +57,14 @@
     <Compile Include="Conn.Designer.cs">
       <DependentUpon>Conn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Serialization.cs" />
     <Compile Include="homePage.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="homePage.Designer.cs">
       <DependentUpon>homePage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\InitialRequest.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

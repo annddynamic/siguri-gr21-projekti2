@@ -21,8 +21,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            //string encrypted = c.encryptDES("asd");
-
+            //string andi = c.sendToServer("mut");
 
 
             

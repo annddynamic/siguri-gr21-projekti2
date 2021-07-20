@@ -6,6 +6,9 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Security.Cryptography;
 using WindowsFormsApp1.Helpers;
+using WindowsFormsApp1.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace WindowsFormsApp1
 {
@@ -16,6 +19,8 @@ namespace WindowsFormsApp1
         private Int32 port;
         private RSACryptoServiceProvider objRsa=new RSACryptoServiceProvider();
         private CBC_DES DESobj = new CBC_DES();
+
+
         public Client(String address, int port)
         {
             this.address = address;
@@ -55,63 +60,103 @@ namespace WindowsFormsApp1
 
         public void createRSAObj(string key)
         {
-            
+            Console.WriteLine("createRSAObject " + key);
             this.objRsa.FromXmlString(key);
         }
 
         public bool keyExchange()
         {
-            string response = communicate("firstConn");
-            createRSAObj(response);
+            InitialRequest req2 = new InitialRequest()
+            {
+                call = "firstConn",
+            };
 
+            string json = JsonConvert.SerializeObject(req2);
+
+            var srvObj = communicate(json);
             
+            createRSAObj(srvObj.publicKey.ToString());
+
+
             DESCryptoServiceProvider obj = this.DESobj.getDesObj();
-            Console.WriteLine(BitConverter.ToString(this.DESobj.getSharedKey()));
-            Console.WriteLine("Des key para enkriptimit dhe dergimit ne srv: " + Encoding.UTF8.GetString(DESobj.getSharedKey()));
-            String encryptDesKey = Encrypt(Encoding.UTF8.GetString(DESobj.getSharedKey()));
+            
+            Console.WriteLine("Celesi Des pa enkript KLIENTII: " + Encoding.UTF8.GetString(DESobj.getSharedKey()));
+            Console.WriteLine("IV Des " + Encoding.UTF8.GetString(DESobj.getSharedIV()));
 
-            String decryptedDesKey = communicate("keyExchange"+encryptDesKey);
+            string encryptedDesKey = Encrypt(Encoding.UTF8.GetString(DESobj.getSharedKey()));
+            byte[] sharedIV = DESobj.getSharedIV();
 
-            if (Encoding.UTF8.GetString(DESobj.getSharedKey())==decryptedDesKey)
+            Console.WriteLine("Enc des key from client" + encryptedDesKey);
+            InitialRequest req = new InitialRequest()
             {
-                return true;
-            }else
-            {
-                return false;
-            }
+                call = "keyExchange",
+                desIV = Encoding.UTF8.GetString(sharedIV),
+                desKeyEnc = encryptedDesKey
+            };
+
+            json = JsonConvert.SerializeObject(req);
+            Console.WriteLine(json);
+
+            var response = communicate(json);
+
+
+
+
+            return false;
+          
             
         }
 
+       
+        private dynamic deserializeJSON(string JSON)
+        {
 
-        public string communicate(String message)
+            return JsonConvert.DeserializeObject<dynamic>(JSON);
+            //return jResponse;
+        }
+
+
+
+        public dynamic  communicate(String message)
         {
 
             // e mer tcp klientin
             TcpClient client = getClient();
             NetworkStream stream = this.client.GetStream();
-            string response=String.Empty;
-            //  the Message into UTF8.
-            Byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
-            // Send the message to the connected TcpServer. 
-            stream.Write(data, 0, data.Length);
-            Console.WriteLine("Sent: {0}", message);
-            // Bytes Array to receive Server Response.
+            string responsebase64 = String.Empty;
 
-            data = new Byte[2048];
-            // Read the Tcp Server Response Bytes.
+
+            //Console.WriteLine("-------------------Pjesa e procesimit te kerkeses nga klienti------------------------------------------\n");
+
+            string encodedStr = Convert.ToBase64String(Encoding.UTF8.GetBytes(message));
+            //Console.WriteLine("Kerkesa e klientit: \n" + message);
+            //Console.WriteLine("encodedbase64 string: \n" + encodedStr);
+            
+            stream.Write(Encoding.UTF8.GetBytes(encodedStr), 0, Encoding.UTF8.GetBytes(encodedStr).Length);
+
+            //Console.WriteLine("------------------------------------------------------------- \n");
+
+
+
+            Byte[] data = new Byte[1024];
+            
             Int32 bytes = stream.Read(data, 0, data.Length);
 
-            //Byte[] byteResponse = new Byte[bytes+20];
 
-            response = Encoding.UTF8.GetString(data, 0, bytes);
-            Console.WriteLine("Received: {0}", response);
-                
-                //Thread.Sleep(2000);
-            
 
-            //stream.Close();
-            //client.Close();
-            return response;
+            //Console.WriteLine("------------------------------------------------------------- \n");
+
+            responsebase64 = Encoding.UTF8.GetString(data, 0, bytes);
+            //Console.WriteLine("qitu vjen base 64 Response server: \n" + responsebase64+ "\n");
+
+            string decodeString = Encoding.UTF8.GetString(Convert.FromBase64String(responsebase64));
+            //Console.WriteLine("qitu vjen i dekodum:  prej serverit \n" + responsebase64);
+
+            return deserializeJSON(decodeString);
+            //string response = handleResponse(objDesirialized);
+
+
+            //Console.WriteLine("------------------------------------------------------------- \n");
         }
     }
 

@@ -86,7 +86,6 @@ namespace WindowsFormsApp1
             string encryptedDesKey = Encrypt(Encoding.UTF8.GetString(DESobj.getSharedKey()));
             byte[] sharedIV = DESobj.getSharedIV();
 
-            Console.WriteLine("Enc des key from client" + encryptedDesKey);
             InitialRequest req = new InitialRequest()
             {
                 call = "keyExchange",
@@ -100,11 +99,14 @@ namespace WindowsFormsApp1
             var response = communicate(json);
 
 
+            if(response.clientDesKey.ToString()== Encoding.UTF8.GetString(DESobj.getSharedKey()))
+            {
+                return true;
+            }
 
 
             return false;
-          
-            
+
         }
 
        

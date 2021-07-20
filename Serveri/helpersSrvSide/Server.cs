@@ -16,8 +16,8 @@ namespace Serveri
         TcpListener server = null;
         private RSAclass RSAobj;
         public byte[] publicKey;
-        private byte[] CleintDesKey;
-        private byte[] CleintIV;
+        private string CleintDesKey;
+        private string CleintIV;
         public Server(string ip, int port, byte[] publicKey, RSAclass obj)
         {
             IPAddress localAddr = IPAddress.Parse(ip);
@@ -151,31 +151,27 @@ namespace Serveri
         string keyExchange(dynamic obj)
         {
 
-            /*this.CleintDesKey = obj.desKeyEnc*/;
 
-
-
-            //Console.WriteLine(obj);
-
-
-            //Console.WriteLine(obj.desKeyEnc);
-
-            //string desDecryptedKey = RSA
-            //string desDecryptedKey = RSAobj.Decrypt(obj.desKeyEnc.toString());
-
+            string desDecryptedKey = RSAobj.Decrypt(obj.desKeyEnc.ToString());
+            this.CleintDesKey = desDecryptedKey;
+            this.CleintIV = obj.desIV.ToString();
             //Console.WriteLine("Prej serverit " + desDecryptedKey);
 
+            SrvInitial sv = new SrvInitial()
+            {
+                clientDesKey = this.CleintDesKey,
+                clientDesIV = this.CleintIV,
 
+            };
 
-
-            return "OK";
+            return JsonConvert.SerializeObject(sv);
 
         }
 
 
 
 
-        
+
 
 
     }

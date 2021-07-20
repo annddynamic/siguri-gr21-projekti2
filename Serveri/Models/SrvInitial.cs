@@ -12,7 +12,7 @@ namespace Serveri.Models
     class SrvInitial
     {
         public string publicKey { get; set; }
-        public byte[] desIV { get; set; }
-        public byte[] desKeyEnc { get; set; }
+        public string clientDesIV { get; set; }
+        public string clientDesKey { get; set; }
     }
 }

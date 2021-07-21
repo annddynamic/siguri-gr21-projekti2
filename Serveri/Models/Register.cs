@@ -9,14 +9,17 @@ namespace Serveri.Models
     
    
 
+
+    
+
     [Serializable]
     public class Person
     {
         public string emri { get; set; }
         public string mbiemri { get; set; }
         public string username { get; set; }
-        public string fjalekalimiHashed { get; set; }
         public string salt { get; set; }
+        public string fjalekalimiHashed { get; set; }
 
     }
 

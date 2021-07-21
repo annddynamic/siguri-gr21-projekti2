@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.Models
 {
-    class loginReq
+    [Serializable]
+    public class loginReq
     {
+        public string call { get; set; }
+        public Data data;
     }
+
+    [Serializable]
+    public class Data
+    {
+     
+        public string username { get; set; }
+        public string fjalekalimi { get; set; }
+
+    }
+
 }

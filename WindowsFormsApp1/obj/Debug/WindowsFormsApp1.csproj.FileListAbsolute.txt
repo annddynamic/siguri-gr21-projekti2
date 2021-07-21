@@ -38,3 +38,4 @@ C:\Users\alber\Desktop\Siguri Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsA
 C:\Users\alber\Desktop\Siguri Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
 C:\Users\alber\Desktop\Siguri Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\alber\Desktop\Siguri Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\alber\Desktop\Siguri Projekti2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Logincs.resources

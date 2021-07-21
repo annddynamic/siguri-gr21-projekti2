@@ -144,6 +144,27 @@ namespace WindowsFormsApp1
         }
 
 
+        public bool login(loginReq req)
+        {
+            // serializimi obj -> string
+            // t dhenat i dergon si json (string)
+            string json = JsonConvert.SerializeObject(req);
+            string encryptedJsonCBC = this.DESobj.Encrypt(json);
+
+            //Console.WriteLine(json);
+            //Console.WriteLine(encryptedJsonCBC);
+            Console.WriteLine(this.DESobj.decrypt(encryptedJsonCBC));
+            var obj = communicate(encryptedJsonCBC);
+
+            if (obj.response.ToString() == "OK")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         public dynamic  communicate(String message)
         {
 

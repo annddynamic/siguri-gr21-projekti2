@@ -71,6 +71,7 @@
       <DependentUpon>Logincs.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\InitialRequest.cs" />
+    <Compile Include="Models\loginReq.cs" />
     <Compile Include="Models\RegisterRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +80,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="homePage.resx">
       <DependentUpon>homePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logincs.resx">
+      <DependentUpon>Logincs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -199,6 +199,9 @@ namespace Serveri
             {
                 
                 response = insertUsers(obj.person);
+            }else if(obj.call == "login")
+            {
+                response = login(obj.data);
             }
          
                 return response;
@@ -262,6 +265,12 @@ namespace Serveri
             //Console.WriteLine(saltedhehash[0] + " " + saltedhehash[1]);
 
 
+
+
+
+
+
+
             Person p1 = new Person()
             {
                 emri = obj.emri,
@@ -271,6 +280,16 @@ namespace Serveri
                 fjalekalimiHashed = saltedhehash[1],
 
             };
+
+            // {name}
+
+
+            //Person p1 = new Person()
+            //{
+            //    p = "users",
+            //    users = bw
+
+            //};
 
             string person = JsonConvert.SerializeObject(p1);
 
@@ -283,7 +302,8 @@ namespace Serveri
             }
             else
             {
-                System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
+                System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", person );
+                //System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
             }
             
             /*ile.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", obj.ToString());*/
@@ -316,8 +336,27 @@ namespace Serveri
             return res;
         }
 
+        string login(dynamic obj)
+        {
 
 
 
-    }
+
+
+
+
+            SrvInitial sv = new SrvInitial()
+            {
+                response = "OK",
+
+            };
+
+            return JsonConvert.SerializeObject(sv);
+
+        }
+
+
+
+
+        }
 }

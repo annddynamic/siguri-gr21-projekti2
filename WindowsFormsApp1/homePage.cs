@@ -44,7 +44,11 @@ namespace WindowsFormsApp1
                 }
             };
 
-            this.client.register(asd);
+            if (this.client.register(asd)) {
+                Logincs lg = new Logincs(this.client);
+                lg.Show();
+                this.Hide();
+            };
         }
 
         private void homePage_Load(object sender, EventArgs e)

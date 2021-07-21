@@ -123,7 +123,7 @@ namespace WindowsFormsApp1
         
 
 
-        public void register(RegisterReq  preg)
+        public bool register(RegisterReq  preg)
         {
             // serializimi obj -> string
             // t dhenat i dergon si json (string)
@@ -133,7 +133,14 @@ namespace WindowsFormsApp1
             //Console.WriteLine(json);
             Console.WriteLine(encryptedJsonCBC);
             Console.WriteLine(this.DESobj.decrypt(encryptedJsonCBC));
-            communicate(encryptedJsonCBC);
+            var obj = communicate(encryptedJsonCBC);
+
+            if (obj.response.ToString()=="OK")
+            {
+                return true;
+            }
+
+            return false;
         }
 
 

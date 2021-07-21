@@ -277,22 +277,20 @@ namespace Serveri
             if (File.Exists(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json"))
             {
                 string text = File.ReadAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json");
-                text = text.Replace("]", " ");
+                text = text.Replace("]", "");
                 File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", text);
-                File.AppendAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", ",\n"+ person + "]");
+                File.AppendAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", ","+ person + "\n]");
             }
             else
             {
                 System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
             }
-
-
+            
             /*ile.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", obj.ToString());*/
             SrvInitial sv = new SrvInitial()
             {
                 response = "OK",
            
-
             };
 
             return JsonConvert.SerializeObject(sv);

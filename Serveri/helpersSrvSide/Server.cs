@@ -258,6 +258,28 @@ namespace Serveri
         {
 
 
+
+            //string usersJson = JsonConvert.SerializeObject(obj);
+            //File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", usersJson);
+            //JsonSerializer jsonSerializer = new JsonSerializer();
+            //StreamWriter sw = new StreamWriter(@"users.json");
+            //JsonWriter jr = new JsonTextWriter(sw);
+            //jsonSerializer.Serialize(jr, obj);
+
+            if (File.Exists(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json"))
+            {
+                string text = File.ReadAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json");
+                text = text.Replace("]", " ");
+                File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", text);
+                File.AppendAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", ","+obj.ToString()+"\n]");
+            }
+            else
+            {
+                System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[\n"+obj.ToString()+"]\n");
+            }
+
+
+            /*ile.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", obj.ToString());*/
             SrvInitial sv = new SrvInitial()
             {
                 response = "OK",

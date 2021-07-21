@@ -31,20 +31,21 @@ namespace WindowsFormsApp1
 
 
          
-            RegisterReq regReq = new RegisterReq()
+            RegisterReq asd = new RegisterReq()
             {
                 call = "register",
                 person = new Person()
                 {
-                    emri = "Andi",
-                    mbiemri = "Dika",
-                    username= "andy",
+                    emri = "Aasdasdsadndi",
+                    mbiemri = "Dasdasdasdika",
+                    username= "andsdsdssdy",
                     fjalekalimi = "asd",
                     konfirmoFjalkalimin= "asd",
+                    andi="sad",
                 }
             };
 
-            this.client.register(regReq);
+            this.client.register(asd);
         }
     }
 }

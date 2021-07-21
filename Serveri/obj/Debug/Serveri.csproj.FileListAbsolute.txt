@@ -20,3 +20,15 @@ C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\obj\Debug\Serveri.c
 C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\obj\Debug\Serveri.csproj.CopyComplete
 C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\obj\Debug\Serveri.exe
 C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\obj\Debug\Serveri.pdb
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\bin\Debug\Serveri.exe.config
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\bin\Debug\Serveri.exe
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\bin\Debug\Serveri.pdb
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\bin\Debug\Newtonsoft.Json.dll
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\bin\Debug\WatsonTcp.dll
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\bin\Debug\Newtonsoft.Json.xml
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\bin\Debug\WatsonTcp.xml
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\obj\Debug\Serveri.csprojAssemblyReference.cache
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\obj\Debug\Serveri.csproj.CoreCompileInputs.cache
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\obj\Debug\Serveri.csproj.CopyComplete
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\obj\Debug\Serveri.exe
+C:\Users\alber\Desktop\Siguri Projekti2\Serveri\obj\Debug\Serveri.pdb

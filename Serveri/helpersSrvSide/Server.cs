@@ -296,16 +296,17 @@ namespace Serveri
             if (File.Exists(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json"))
             {
                 string text = File.ReadAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json");
-                text = text.Replace("]", "");
+                text = text.Replace("]}", ",\n");
                 File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", text);
-                File.AppendAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", ","+ person + "\n]");
+                File.AppendAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", person + "]}");
             }
+            //{"users:[personi]"}
             else
             {
-                System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", person );
+                System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "{\"users\":["+ person + "]}");
                 //System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
             }
-            
+
             /*ile.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", obj.ToString());*/
             SrvInitial sv = new SrvInitial()
             {

@@ -40,7 +40,7 @@ namespace WindowsFormsApp1
                     mbiemri = "Dasdasdasdika",
                     username= "andsdsdssdy",
                     fjalekalimi = "asd",
-                    konfirmoFjalkalimin= "asd",
+             
                 }
             };
 

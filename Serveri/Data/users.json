@@ -1,19 +1,27 @@
 [
-{
-  "emri": "Aasdasdsadndi",
-  "mbiemri": "Dasdasdasdika",
-  "username": "andsdsdssdy",
-  "fjalekalimi": "asd",
-  "konfirmoFjalkalimin": "asd",
-  "andi": "sad"
-} 
-,{
-  "emri": "Aasdasdsadndi",
-  "mbiemri": "Dasdasdasdika",
-  "username": "andsdsdssdy",
-  "fjalekalimi": "asd",
-  "konfirmoFjalkalimin": "asd",
-  "andi": "sad"
-}
-
+{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"CjTPGYeQQhIaxGe5/KpydCO8b/E=","salt":"130884"} 
+,
+{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"J5DsIvJ1S404lDFrzaYxiQuVDys=","salt":"667996"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"iFWF8+qP05C/XfXZAjeSI/L8gfE=","salt":"764742"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"Vvb1RcwMMM3vghIEPKofJlOcATk=","salt":"742327"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"lpONYUFlRkdJpky1fnUzgnqtgw8=","salt":"736416"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"Jk6tgnh7im8JeIYsSlGhWbF6ZmU=","salt":"172094"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"ufYlP5BkjkYv7qlyXEXwKVZEmB4=","salt":"248755"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"E7M0ryE9vo5PFEyOdHCO9RcdQIc=","salt":"662918"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"5eYSH5LuJVT/UtkCElggoyBKKvE=","salt":"405795"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"noJm/+oCONOkSXkB7odR8wtGG1A=","salt":"854309"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"gxx//Msn/LToej4w53tEIfOD388=","salt":"550081"}
+ ,{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"BUVqd0IH2n2uYhWFrBY3MUhd8Sw=","salt":"421520"}
+ ,
+{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"QJfIaRcbe2Qdk6AUIWPLwcDVDdQ=","salt":"330037"}
+ ,
+{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"2IuF95J5546xruCixycHQ73lSVo=","salt":"602885"}
+ ,
+{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"h01dpv83PQzCLPLYBxxm8NZQou8=","salt":"474324"}
+ ,
+{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"W/fHhMtvp7mvUyLKRfGbpyWiJsY=","salt":"599913"}
+ ,
+{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"ehZ0eaY9M4Ce5Xs45FjIzYweJas=","salt":"245609"}
+ ,
+{"emri":"Aasdasdsadndi","mbiemri":"Dasdasdasdika","username":"andsdsdssdy","fjalekalimiHashed":"hVSIaqt7yu8mLSu3KClnUOGeW3M=","salt":"615638"}
 ]

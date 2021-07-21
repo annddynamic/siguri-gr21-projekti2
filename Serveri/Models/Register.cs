@@ -15,8 +15,8 @@ namespace Serveri.Models
         public string emri { get; set; }
         public string mbiemri { get; set; }
         public string username { get; set; }
-        public string fjalekalimi { get; set; }
-        public string konfirmoFjalkalimin { get; set; }
+        public string fjalekalimiHashed { get; set; }
+        public string salt { get; set; }
 
     }
 

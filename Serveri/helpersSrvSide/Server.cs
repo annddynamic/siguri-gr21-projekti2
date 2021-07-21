@@ -257,25 +257,33 @@ namespace Serveri
         string insertUsers(dynamic obj)
         {
 
+            string[] saltedhehash = hashFjalekalimi(obj.fjalekalimi.ToString());
+
+            //Console.WriteLine(saltedhehash[0] + " " + saltedhehash[1]);
 
 
-            //string usersJson = JsonConvert.SerializeObject(obj);
-            //File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", usersJson);
-            //JsonSerializer jsonSerializer = new JsonSerializer();
-            //StreamWriter sw = new StreamWriter(@"users.json");
-            //JsonWriter jr = new JsonTextWriter(sw);
-            //jsonSerializer.Serialize(jr, obj);
+            Person p1 = new Person()
+            {
+                emri = obj.emri,
+                mbiemri = obj.mbiemri,
+                username = obj.username,
+                salt = saltedhehash[0],
+                fjalekalimiHashed = saltedhehash[1],
+
+            };
+
+            string person = JsonConvert.SerializeObject(p1);
 
             if (File.Exists(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json"))
             {
                 string text = File.ReadAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json");
                 text = text.Replace("]", " ");
                 File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", text);
-                File.AppendAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", ","+obj.ToString()+"\n]");
+                File.AppendAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", ",\n"+ person + "]");
             }
             else
             {
-                System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[\n"+obj.ToString()+"]\n");
+                System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
             }
 
 
@@ -283,8 +291,7 @@ namespace Serveri
             SrvInitial sv = new SrvInitial()
             {
                 response = "OK",
-                //clientDesKey = this.CleintDesKey,
-                //clientDesIV = this.CleintIV,
+           
 
             };
 
@@ -292,6 +299,25 @@ namespace Serveri
 
 
         }
+
+
+        public string[] hashFjalekalimi(string fjalekalimi)
+        {
+            string salt = new Random().Next(100000, 1000000).ToString();
+            string saltedPw = fjalekalimi + salt;
+
+            byte[] bsaltedPw = Encoding.UTF8.GetBytes(saltedPw);
+
+            SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+            byte[] byteSaltHashPW = objHash.ComputeHash(bsaltedPw);
+
+
+
+            string[] res= { salt, Convert.ToBase64String(byteSaltHashPW) };
+
+            return res;
+        }
+
 
 
 

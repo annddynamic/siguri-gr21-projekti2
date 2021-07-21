@@ -22,7 +22,6 @@ namespace WindowsFormsApp1.Models
         public string mbiemri { get; set; }
         public string username { get; set; }
         public string fjalekalimi { get; set; }
-        public string konfirmoFjalkalimin { get; set; }
 
     }
 

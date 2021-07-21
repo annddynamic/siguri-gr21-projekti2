@@ -47,110 +47,117 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(28, 35);
+            this.label1.Location = new System.Drawing.Point(32, 44);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(120, 29);
+            this.label1.Size = new System.Drawing.Size(138, 36);
             this.label1.TabIndex = 0;
             this.label1.Text = "Welcome";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(83, 87);
+            this.label2.Location = new System.Drawing.Point(93, 109);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 17);
+            this.label2.Size = new System.Drawing.Size(68, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "plaintext";
             // 
             // textEmri
             // 
-            this.textEmri.Location = new System.Drawing.Point(86, 120);
+            this.textEmri.Location = new System.Drawing.Point(97, 150);
+            this.textEmri.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textEmri.Multiline = true;
             this.textEmri.Name = "textEmri";
-            this.textEmri.Size = new System.Drawing.Size(267, 136);
+            this.textEmri.Size = new System.Drawing.Size(300, 169);
             this.textEmri.TabIndex = 2;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(427, 346);
+            this.textBox2.Location = new System.Drawing.Point(480, 432);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(138, 61);
+            this.textBox2.Size = new System.Drawing.Size(155, 75);
             this.textBox2.TabIndex = 3;
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(74, 333);
+            this.textBox3.Location = new System.Drawing.Point(83, 416);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(138, 61);
+            this.textBox3.Size = new System.Drawing.Size(155, 75);
             this.textBox3.TabIndex = 4;
             // 
             // textKey
             // 
-            this.textKey.Location = new System.Drawing.Point(427, 220);
+            this.textKey.Location = new System.Drawing.Point(480, 275);
+            this.textKey.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textKey.Multiline = true;
             this.textKey.Name = "textKey";
-            this.textKey.Size = new System.Drawing.Size(138, 61);
+            this.textKey.Size = new System.Drawing.Size(155, 75);
             this.textKey.TabIndex = 5;
             // 
             // textIV
             // 
-            this.textIV.Location = new System.Drawing.Point(86, 262);
+            this.textIV.Location = new System.Drawing.Point(97, 328);
+            this.textIV.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textIV.Multiline = true;
             this.textIV.Name = "textIV";
-            this.textIV.Size = new System.Drawing.Size(138, 61);
+            this.textIV.Size = new System.Drawing.Size(155, 75);
             this.textIV.TabIndex = 6;
             // 
             // textMbiemri
             // 
-            this.textMbiemri.Location = new System.Drawing.Point(427, 108);
+            this.textMbiemri.Location = new System.Drawing.Point(480, 135);
+            this.textMbiemri.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textMbiemri.Multiline = true;
             this.textMbiemri.Name = "textMbiemri";
-            this.textMbiemri.Size = new System.Drawing.Size(138, 61);
+            this.textMbiemri.Size = new System.Drawing.Size(155, 75);
             this.textMbiemri.TabIndex = 7;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(317, 286);
+            this.label3.Location = new System.Drawing.Point(357, 358);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 17);
+            this.label3.Size = new System.Drawing.Size(41, 20);
             this.label3.TabIndex = 8;
             this.label3.Text = "Emri";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(436, 200);
+            this.label4.Location = new System.Drawing.Point(490, 250);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(30, 17);
+            this.label4.Size = new System.Drawing.Size(33, 20);
             this.label4.TabIndex = 9;
             this.label4.Text = "key";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(46, 200);
+            this.label5.Location = new System.Drawing.Point(52, 250);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(20, 17);
+            this.label5.Size = new System.Drawing.Size(25, 20);
             this.label5.TabIndex = 10;
             this.label5.Text = "IV";
             // 
             // txtMbiemri
             // 
             this.txtMbiemri.AutoSize = true;
-            this.txtMbiemri.Location = new System.Drawing.Point(436, 66);
+            this.txtMbiemri.Location = new System.Drawing.Point(490, 82);
             this.txtMbiemri.Name = "txtMbiemri";
-            this.txtMbiemri.Size = new System.Drawing.Size(47, 17);
+            this.txtMbiemri.Size = new System.Drawing.Size(52, 20);
             this.txtMbiemri.TabIndex = 11;
             this.txtMbiemri.Text = "cipher";
             // 
             // Send
             // 
-            this.Send.Location = new System.Drawing.Point(107, 464);
+            this.Send.Location = new System.Drawing.Point(120, 580);
+            this.Send.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Send.Name = "Send";
-            this.Send.Size = new System.Drawing.Size(138, 56);
+            this.Send.Size = new System.Drawing.Size(155, 70);
             this.Send.TabIndex = 12;
             this.Send.Text = "Send";
             this.Send.UseVisualStyleBackColor = true;
@@ -158,11 +165,11 @@
             // 
             // homePage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.bckg2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(671, 588);
+            this.ClientSize = new System.Drawing.Size(755, 735);
             this.Controls.Add(this.Send);
             this.Controls.Add(this.txtMbiemri);
             this.Controls.Add(this.label5);
@@ -176,8 +183,10 @@
             this.Controls.Add(this.textEmri);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "homePage";
             this.Text = " Send";
+            this.Load += new System.EventHandler(this.homePage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

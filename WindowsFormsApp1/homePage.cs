@@ -41,11 +41,15 @@ namespace WindowsFormsApp1
                     username= "andsdsdssdy",
                     fjalekalimi = "asd",
                     konfirmoFjalkalimin= "asd",
-                    andi="sad",
                 }
             };
 
             this.client.register(asd);
+        }
+
+        private void homePage_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

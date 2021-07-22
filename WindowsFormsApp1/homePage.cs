@@ -65,11 +65,11 @@ namespace WindowsFormsApp1
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Logincs lgi = new Logincs();
+            Logincs lgi = new Logincs(this.client);
             lgi.Show();
             this.Hide();
 
-
+          
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

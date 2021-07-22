@@ -160,7 +160,7 @@ namespace WindowsFormsApp1
 
             if (!IsValidJson(JSON))
             {
-                Console.WriteLine("Response i serverit encrypted: "+JSON);
+                Console.WriteLine("Response i serverit encrypted: " + JSON);
                 string decryptedJson = DESobj.decrypt(JSON);
                 return JsonConvert.DeserializeObject<dynamic>(decryptedJson);
 

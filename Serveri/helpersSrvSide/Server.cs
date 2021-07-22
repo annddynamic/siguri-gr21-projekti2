@@ -12,6 +12,7 @@ using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Serveri
 {
@@ -151,6 +152,28 @@ namespace Serveri
         }
 
 
+        public string encrypt(String plaintext, byte[] clientDesKey, byte[] clientDesIV)
+        {
+            byte[] bytePlaintext = Encoding.UTF8.GetBytes(plaintext);
+            DESCryptoServiceProvider desObj = new DESCryptoServiceProvider();
+
+            desObj.Mode = CipherMode.CBC;
+            desObj.Padding = PaddingMode.Zeros;
+            desObj.Key = this.CleintDesKey;
+            desObj.IV = this.CleintIV;
+
+            MemoryStream ms = new MemoryStream();
+            CryptoStream cs = new CryptoStream(ms, desObj.CreateEncryptor(clientDesKey, clientDesIV), CryptoStreamMode.Write);
+
+            cs.Write(bytePlaintext, 0, bytePlaintext.Length);
+            cs.Close();
+
+            byte[] byteCipherText = ms.ToArray();
+            return Convert.ToBase64String(byteCipherText);
+
+        }
+
+
 
         private  bool IsValidJson(string strInput)
         {
@@ -268,9 +291,13 @@ namespace Serveri
 
             //Console.WriteLine(saltedhehash[0] + " " + saltedhehash[1]);
 
+
+            
+
             List<Person> users = new List<Person>()
             {
                 new Person{
+                    id=Person.counter,
                     emri = obj.emri,
                     mbiemri = obj.mbiemri,
                     username = obj.username,
@@ -280,6 +307,8 @@ namespace Serveri
 
             };
 
+            Person.counter += 1;
+
             string person = JsonConvert.SerializeObject(users);
 
             if (File.Exists(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json"))
@@ -287,7 +316,7 @@ namespace Serveri
                 File.AppendAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json", person);
                 string text = File.ReadAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json");
                 text = text.Replace("][", ",");
-                File.WriteAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json", text);
+                File.WriteAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json", text );
 
             }
             else
@@ -303,9 +332,9 @@ namespace Serveri
            
             };
 
-            return JsonConvert.SerializeObject(sv);
-
-
+            string response = JsonConvert.SerializeObject(sv);
+            return encrypt(response, this.CleintDesKey, this.CleintIV);
+            
         }
 
 
@@ -355,14 +384,39 @@ namespace Serveri
             string json = File.ReadAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json");
 
             var users =deserializeJSON(json);
+            //Console.WriteLine(users);
             foreach (var user in users)
             {
-                if(user.username ==log.username)
+                if (user.username == log.username)
                 {
-
+                    string path = @"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Nenshkrimi\nenshkrimi.xml";
                     //Console.WriteLine(user.username);
                     if (user.fjalekalimiHashed.ToString() == hashFjalekalimiperValidim(log.fjalekalimi, user.salt.ToString()))
                     {
+                        XmlDocument objXml = new XmlDocument();
+
+                        if (File.Exists(path) == false)
+                        {
+                            XmlTextWriter xmlTextWriter = new XmlTextWriter(path, Encoding.UTF8);
+                            xmlTextWriter.WriteStartElement("perdoruesi");
+                            xmlTextWriter.Close();
+                        }
+
+                        objXml.Load(path);
+
+                        XmlElement rootNode = objXml.DocumentElement;
+
+                        XmlElement idNode = objXml.CreateElement("id");
+                        XmlElement nameNode = objXml.CreateElement("nameNode");
+                        XmlElement surnameNode = objXml.CreateElement("surnameNode");
+                        XmlElement usernameNode = objXml.CreateElement("usernameNode");
+                        XmlElement fjalekalimiH = objXml.CreateElement("fjalekalimiH");
+
+                        idNode.InnerText = user.id.ToString();
+                        nameNode.InnerText = user.emri.ToString();
+                        surnameNode.InnerText = user.mbiemri.ToString();
+                        usernameNode.InnerText = user.username.ToString();
+                        fjalekalimiH.InnerText = user.fjalekalimiHashed.ToString();
 
                         SrvInitial svr = new SrvInitial()
                         {
@@ -378,7 +432,12 @@ namespace Serveri
                 response = "JOE",
 
             };
-            return JsonConvert.SerializeObject(sv);
+
+
+            string response = JsonConvert.SerializeObject(sv);
+            return encrypt(response, this.CleintDesKey, this.CleintIV);
+
+
         }
     }
 }

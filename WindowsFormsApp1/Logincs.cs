@@ -41,8 +41,8 @@ namespace WindowsFormsApp1
 
             if (this.client.login(asd))
             {
-                
 
+                MessageBox.Show("Certifikata u nenshkrua me sukses!");
 
             }
             else

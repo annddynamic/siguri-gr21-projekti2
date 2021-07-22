@@ -156,47 +156,52 @@ namespace WindowsFormsApp1
             XmlDocument objXml = new XmlDocument();
             objXml.Load(path);
 
-            XmlNodeList signatureNodes = objXml.GetElementsByTagName("Signature");
-            XmlElement signatureNode = (XmlElement)signatureNodes[0];
+            bool result = VerifyXml(objXml, this.objRsa);
 
-            SignedXml objSignedXml = new SignedXml(objXml);
-
-            objSignedXml.LoadXml(signatureNode);
-            //RSAKeyValue key = new RSAKeyValue(this.objRsa);
-
-            Reference referenca = new Reference();
-            referenca.Uri = "";
-
-            XmlDsigEnvelopedSignatureTransform xdest = new XmlDsigEnvelopedSignatureTransform();
-            referenca.AddTransform(xdest);
-
-            objSignedXml.AddReference(referenca);
-
-            KeyInfo ki = new KeyInfo();
-            ki.AddClause(new RSAKeyValue(this.objRsa));
-
-
-            objSignedXml.KeyInfo = ki;
-            objSignedXml.SigningKey = this.objRsa;
-
-         
-
-            if (objSignedXml.CheckSignature() == true)
+            if (result)
             {
-                Console.WriteLine("JOO");
                 return true;
             }
             else
-                return false;
+            {
+               return false;
+            }
 
+         
 
-            //Console.WriteLine(obj);
-            //if (obj.response.ToString() == "OK")
-            //{
-            //    return true;
-            //}
+          
+        }
 
-            return false;
+        public  Boolean VerifyXml(XmlDocument xmlDoc, RSA key)
+        {
+            // Check arguments.
+            if (xmlDoc == null)
+                throw new ArgumentException("xmlDoc");
+            if (key == null)
+                throw new ArgumentException("key");
+
+            
+            SignedXml signedXml = new SignedXml(xmlDoc);
+
+            XmlNodeList nodeList = xmlDoc.GetElementsByTagName("Signature");
+
+            // Throw an exception if no signature was found.
+            if (nodeList.Count <= 0)
+            {
+                throw new CryptographicException("Verification failed: No Signature was found in the document.");
+            }
+
+           
+            if (nodeList.Count >= 2)
+            {
+                throw new CryptographicException("Verification failed: More that one signature was found for the document.");
+            }
+
+            // Load the first <signature> node.
+            signedXml.LoadXml((XmlElement)nodeList[0]);
+
+            // Check the signature and return the result.
+            return signedXml.CheckSignature(key);
         }
 
 

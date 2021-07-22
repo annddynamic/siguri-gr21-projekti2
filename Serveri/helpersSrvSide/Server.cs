@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Collections.Generic;
 using System.Xml;
+using System.Security.Cryptography.Xml;
 
 namespace Serveri
 {
@@ -398,7 +399,7 @@ namespace Serveri
                         if (File.Exists(path) == false)
                         {
                             XmlTextWriter xmlTextWriter = new XmlTextWriter(path, Encoding.UTF8);
-                            xmlTextWriter.WriteStartElement("perdoruesi");
+                            xmlTextWriter.WriteStartElement("perdoruesit");
                             xmlTextWriter.Close();
                         }
 
@@ -406,6 +407,7 @@ namespace Serveri
 
                         XmlElement rootNode = objXml.DocumentElement;
 
+                        XmlElement perdoruesi = objXml.CreateElement("perdoruesi");
                         XmlElement idNode = objXml.CreateElement("id");
                         XmlElement nameNode = objXml.CreateElement("nameNode");
                         XmlElement surnameNode = objXml.CreateElement("surnameNode");
@@ -417,6 +419,46 @@ namespace Serveri
                         surnameNode.InnerText = user.mbiemri.ToString();
                         usernameNode.InnerText = user.username.ToString();
                         fjalekalimiH.InnerText = user.fjalekalimiHashed.ToString();
+
+
+                        perdoruesi.AppendChild(idNode);
+                        perdoruesi.AppendChild(nameNode);
+                        perdoruesi.AppendChild(surnameNode);
+                        perdoruesi.AppendChild(usernameNode);
+                        perdoruesi.AppendChild(fjalekalimiH);
+                        rootNode.AppendChild(perdoruesi);
+                        objXml.Save(path);
+
+
+
+                        SignedXml objSignedXml = new SignedXml(objXml);
+
+                        Reference referenca = new Reference();
+                        referenca.Uri = "";
+
+                        XmlDsigEnvelopedSignatureTransform xdest = new XmlDsigEnvelopedSignatureTransform();
+                        referenca.AddTransform(xdest);
+
+                        objSignedXml.AddReference(referenca);
+
+                        KeyInfo ki = new KeyInfo();
+                        ki.AddClause(new RSAKeyValue(this.RSAobj.getRsaObj()));
+
+                        objSignedXml.KeyInfo = ki;
+                        objSignedXml.SigningKey = this.RSAobj.getRsaObj();
+
+                        objSignedXml.ComputeSignature();
+
+                        XmlElement signatureNode = objSignedXml.GetXml();
+
+                         rootNode = objXml.DocumentElement;
+
+
+                        rootNode.AppendChild(signatureNode);
+
+                        objXml.Save(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Nenshkrimi\personat_nenshkruar.xml");
+
+
 
                         SrvInitial svr = new SrvInitial()
                         {

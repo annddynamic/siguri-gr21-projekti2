@@ -112,16 +112,6 @@ namespace WindowsFormsApp1
         }
 
        
-        private dynamic deserializeJSON(string JSON)
-        {
-
-            return JsonConvert.DeserializeObject<dynamic>(JSON);
-            //return jResponse;
-             
-        }
-
-        
-
 
         public bool register(RegisterReq  preg)
         {
@@ -163,6 +153,61 @@ namespace WindowsFormsApp1
 
             return false;
         }
+
+
+        private dynamic deserializeJSON(string JSON)
+        {
+
+            if (!IsValidJson(JSON))
+            {
+                Console.WriteLine("Response i serverit encrypted: "+JSON);
+                string decryptedJson = DESobj.decrypt(JSON);
+                return JsonConvert.DeserializeObject<dynamic>(decryptedJson);
+
+
+            }
+
+            return JsonConvert.DeserializeObject<dynamic>(JSON);
+             
+        }
+
+        
+
+
+
+
+        private bool IsValidJson(string strInput)
+        {
+            if (string.IsNullOrWhiteSpace(strInput)) { return false; }
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    var obj = JToken.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    //Exception in parsing json
+                    Console.WriteLine(jex.Message);
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
 
 
         public dynamic  communicate(String message)

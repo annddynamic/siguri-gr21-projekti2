@@ -36,15 +36,17 @@ namespace WindowsFormsApp1
                 call = "register",
                 person = new Person()
                 {
-                    emri = "ansdi",
-                    mbiemri = "makareci",
-                    username= "andsidika",
-                    fjalekalimi = "ansdidika",
-             
+                    emri = textBox1.Text,
+                    mbiemri = textBox2.Text,
+                    username = textBox3.Text,
+                    fjalekalimi = textBox4.Text,
+
                 }
             };
 
-            if (this.client.register(asd)) {
+
+            if (this.client.register(asd))
+            {
                 Logincs lg = new Logincs(this.client);
                 lg.Show();
                 this.Hide();
@@ -52,6 +54,40 @@ namespace WindowsFormsApp1
         }
 
         private void homePage_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Logincs lgi = new Logincs();
+            lgi.Show();
+            this.Hide();
+
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
         }

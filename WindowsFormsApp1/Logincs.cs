@@ -33,20 +33,51 @@ namespace WindowsFormsApp1
                 call = "login",
                 data = new Data()
                 {
-                    username = "andidika",
-                    fjalekalimi = "ansdidika",
+                    username = textBox1.Text,
+                    fjalekalimi = textBox2.Text,
 
                 }
             };
 
             if (this.client.login(asd))
             {
-                MessageBox.Show("evev NANE BRE ja qillove");
+                
 
 
+            }
+            else
+            {
+                MessageBox.Show("Gabim ne username ose password!");
             };
+        }
 
-            
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void linkLabel1_Click(object sender, EventArgs e)
+        //{
+        //    homePage hp = new homePage();
+        //    hp.Show();
+        //    this.Hide();
+        //}
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            homePage hp = new homePage(this.client);
+            hp.Show();
+            this.Hide();
 
         }
     }

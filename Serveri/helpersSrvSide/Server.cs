@@ -114,6 +114,7 @@ namespace Serveri
             if (!IsValidJson(JSON)){
 
                 string decryptedJson = decrypt(JSON, this.CleintDesKey, this.CleintIV);
+                Console.WriteLine("Kerkesa e klientit  decrypted: " + decryptedJson);
                 return JsonConvert.DeserializeObject<dynamic>(decryptedJson);
 
 
@@ -280,7 +281,6 @@ namespace Serveri
             };
 
             string person = JsonConvert.SerializeObject(users);
-            Console.WriteLine(person);
 
             if (File.Exists(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json"))
             {
@@ -367,27 +367,18 @@ namespace Serveri
                         SrvInitial svr = new SrvInitial()
                         {
                             response = "OK",
-
                         };
                         return JsonConvert.SerializeObject(svr);
                         break;
                     }
-
                 }
             }
-
             SrvInitial sv = new SrvInitial()
             {
                 response = "JOE",
 
             };
             return JsonConvert.SerializeObject(sv);
-
-
         }
-
-
-
-
     }
 }

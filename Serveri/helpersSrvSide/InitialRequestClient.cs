@@ -12,7 +12,6 @@ namespace Serveri.helpersSrvSide
         public string call { get; set; }
         public byte[] desIV { get; set; }
         public string desKeyEnc { get; set; }
-
         public string test { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
 
             if (client.keyExchange())
             {
-                homePage hp = new homePage(client);
+                Logincs hp = new Logincs(client);
                 this.Hide();
                 hp.Show();
 

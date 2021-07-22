@@ -60,7 +60,7 @@ namespace Serveri
             TcpClient client = (TcpClient)obj;
             var stream = client.GetStream();
             string dataBase64 = null;
-            Byte[] bytes = new Byte[1048];
+            Byte[] bytes = new Byte[4096];
             int i;
             try
             {
@@ -444,6 +444,7 @@ namespace Serveri
                         KeyInfo ki = new KeyInfo();
                         ki.AddClause(new RSAKeyValue(this.RSAobj.getRsaObj()));
 
+
                         objSignedXml.KeyInfo = ki;
                         objSignedXml.SigningKey = this.RSAobj.getRsaObj();
 
@@ -458,17 +459,29 @@ namespace Serveri
 
                         objXml.Save(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Nenshkrimi\personat_nenshkruar.xml");
 
+                        string xml = File.ReadAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Nenshkrimi\personat_nenshkruar.xml");
+                        //Console.WriteLine(xml);
 
 
-                        SrvInitial svr = new SrvInitial()
+                        SignatureToClient r = new SignatureToClient()
                         {
                             response = "OK",
+                            signature = xml
                         };
-                        return JsonConvert.SerializeObject(svr);
+
+
+
+                        string responseSignature = JsonConvert.SerializeObject(r);
+
+                        Console.WriteLine(responseSignature);
+                        return encrypt(responseSignature, this.CleintDesKey, this.CleintIV);
+                        
                         break;
                     }
                 }
             }
+
+
             SrvInitial sv = new SrvInitial()
             {
                 response = "JOE",

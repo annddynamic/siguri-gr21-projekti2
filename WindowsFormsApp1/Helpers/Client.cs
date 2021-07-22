@@ -9,6 +9,8 @@ using WindowsFormsApp1.Helpers;
 using WindowsFormsApp1.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Xml;
+using System.Security.Cryptography.Xml;
 
 namespace WindowsFormsApp1
 {
@@ -146,10 +148,53 @@ namespace WindowsFormsApp1
             Console.WriteLine(this.DESobj.decrypt(encryptedJsonCBC));
             var obj = communicate(encryptedJsonCBC);
 
-            if (obj.response.ToString() == "OK")
+            string path = @"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\WindowsFormsApp1\NenshkrimiK\verified.xml";
+
+
+            System.IO.File.WriteAllText(path, obj.signature.ToString());
+
+            XmlDocument objXml = new XmlDocument();
+            objXml.Load(path);
+
+            XmlNodeList signatureNodes = objXml.GetElementsByTagName("Signature");
+            XmlElement signatureNode = (XmlElement)signatureNodes[0];
+
+            SignedXml objSignedXml = new SignedXml(objXml);
+
+            objSignedXml.LoadXml(signatureNode);
+            //RSAKeyValue key = new RSAKeyValue(this.objRsa);
+
+            Reference referenca = new Reference();
+            referenca.Uri = "";
+
+            XmlDsigEnvelopedSignatureTransform xdest = new XmlDsigEnvelopedSignatureTransform();
+            referenca.AddTransform(xdest);
+
+            objSignedXml.AddReference(referenca);
+
+            KeyInfo ki = new KeyInfo();
+            ki.AddClause(new RSAKeyValue(this.objRsa));
+
+
+            objSignedXml.KeyInfo = ki;
+            objSignedXml.SigningKey = this.objRsa;
+
+         
+
+            if (objSignedXml.CheckSignature() == true)
             {
+                Console.WriteLine("JOO");
                 return true;
             }
+            else
+                return false;
+
+
+            //Console.WriteLine(obj);
+            //if (obj.response.ToString() == "OK")
+            //{
+            //    return true;
+            //}
 
             return false;
         }
@@ -162,6 +207,8 @@ namespace WindowsFormsApp1
             {
                 Console.WriteLine("Response i serverit encrypted: " + JSON);
                 string decryptedJson = DESobj.decrypt(JSON);
+                Console.WriteLine("Response i serverit decrypted: \n" + decryptedJson);
+
                 return JsonConvert.DeserializeObject<dynamic>(decryptedJson);
 
 
@@ -231,7 +278,7 @@ namespace WindowsFormsApp1
 
 
 
-            Byte[] data = new Byte[1024];
+            Byte[] data = new Byte[8000];
             
             Int32 bytes = stream.Read(data, 0, data.Length);
 

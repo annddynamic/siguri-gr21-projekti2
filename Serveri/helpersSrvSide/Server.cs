@@ -466,7 +466,13 @@ namespace Serveri
                         SignatureToClient r = new SignatureToClient()
                         {
                             response = "OK",
-                            signature = xml
+                            signature = xml,
+                            user = new Person()
+                            {
+                                emri = user.emri,
+                                mbiemri = user.mbiemri,
+                                username = user.username
+                            }
                         };
 
 

@@ -14,6 +14,9 @@ namespace WindowsFormsApp1
     public partial class Logincs : Form
     {
         private Client client;
+
+
+
         public Logincs()
         {
             InitializeComponent();
@@ -42,7 +45,10 @@ namespace WindowsFormsApp1
             if (this.client.login(asd))
             {
 
-                MessageBox.Show("Certifikata u nenshkrua me sukses!");
+                MessageBox.Show("Certifikata u verifikua me sukses!");
+                logedIn lg = new logedIn(this.client);
+                lg.Show();
+                this.Hide();
 
             }
             else

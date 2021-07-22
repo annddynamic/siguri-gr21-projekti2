@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Xml;
 using System.Security.Cryptography.Xml;
+using System.IO;
 
 namespace WindowsFormsApp1
 {
@@ -21,6 +22,13 @@ namespace WindowsFormsApp1
         private Int32 port;
         private RSACryptoServiceProvider objRsa=new RSACryptoServiceProvider();
         private CBC_DES DESobj = new CBC_DES();
+        public dynamic useri;
+        
+
+        public dynamic getUser()
+        {
+            return this.useri;
+        }
 
 
         public Client(String address, int port)
@@ -41,10 +49,8 @@ namespace WindowsFormsApp1
                 {
                     Console.WriteLine("Exception: {0}", e);
                 }
-
             }
             return this.client;
-
         }
 
 
@@ -54,14 +60,6 @@ namespace WindowsFormsApp1
             return Convert.ToBase64String(this.objRsa.Encrypt(bytePLaintext, true));
 
         }
-        //public string Encrypt(string plaintext)
-        //{
-        //    byte[] bytePLaintext = Encoding.Unicode.GetBytes(plaintext);
-        //    return Convert.ToBase64String(this.objRsa.Encrypt(bytePLaintext, true));
-
-
-        //}
-
      
         public void createRSAObj(string key)
         {
@@ -110,10 +108,7 @@ namespace WindowsFormsApp1
             var response = communicate(json);
 
             return true;
-
         }
-
-       
 
         public bool register(RegisterReq  preg)
         {
@@ -122,7 +117,6 @@ namespace WindowsFormsApp1
             string  json = JsonConvert.SerializeObject(preg);
             string encryptedJsonCBC = this.DESobj.Encrypt(json);
 
-            //Console.WriteLine(json);
             Console.WriteLine(encryptedJsonCBC);
             Console.WriteLine(this.DESobj.decrypt(encryptedJsonCBC));
             var obj = communicate(encryptedJsonCBC);
@@ -131,25 +125,19 @@ namespace WindowsFormsApp1
             {
                 return true;
             }
-
             return false;
         }
 
-
         public bool login(loginReq req)
         {
-            // serializimi obj -> string
-            // t dhenat i dergon si json (string)
+          
             string json = JsonConvert.SerializeObject(req);
             string encryptedJsonCBC = this.DESobj.Encrypt(json);
-
-            //Console.WriteLine(json);
-            //Console.WriteLine(encryptedJsonCBC);
+            
             Console.WriteLine(this.DESobj.decrypt(encryptedJsonCBC));
             var obj = communicate(encryptedJsonCBC);
 
             string path = @"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\WindowsFormsApp1\NenshkrimiK\verified.xml";
-
 
             System.IO.File.WriteAllText(path, obj.signature.ToString());
 
@@ -160,26 +148,24 @@ namespace WindowsFormsApp1
 
             if (result)
             {
+                //File.Delete(path);
+                this.useri = obj.user;
+
                 return true;
             }
             else
             {
                return false;
             }
-
-         
-
-          
         }
 
-        public  Boolean VerifyXml(XmlDocument xmlDoc, RSA key)
+        public Boolean VerifyXml(XmlDocument xmlDoc, RSA key)
         {
             // Check arguments.
             if (xmlDoc == null)
                 throw new ArgumentException("xmlDoc");
             if (key == null)
                 throw new ArgumentException("key");
-
             
             SignedXml signedXml = new SignedXml(xmlDoc);
 
@@ -190,7 +176,6 @@ namespace WindowsFormsApp1
             {
                 throw new CryptographicException("Verification failed: No Signature was found in the document.");
             }
-
            
             if (nodeList.Count >= 2)
             {
@@ -207,7 +192,6 @@ namespace WindowsFormsApp1
 
         private dynamic deserializeJSON(string JSON)
         {
-
             if (!IsValidJson(JSON))
             {
                 Console.WriteLine("Response i serverit encrypted: " + JSON);
@@ -215,18 +199,10 @@ namespace WindowsFormsApp1
                 Console.WriteLine("Response i serverit decrypted: \n" + decryptedJson);
 
                 return JsonConvert.DeserializeObject<dynamic>(decryptedJson);
-
-
             }
 
             return JsonConvert.DeserializeObject<dynamic>(JSON);
-             
         }
-
-        
-
-
-
 
         private bool IsValidJson(string strInput)
         {
@@ -258,10 +234,6 @@ namespace WindowsFormsApp1
             }
         }
 
-
-
-
-
         public dynamic  communicate(String message)
         {
 
@@ -269,7 +241,6 @@ namespace WindowsFormsApp1
             TcpClient client = getClient();
             NetworkStream stream = this.client.GetStream();
             string responsebase64 = String.Empty;
-
 
             //Console.WriteLine("-------------------Pjesa e procesimit te kerkeses nga klienti------------------------------------------\n");
 
@@ -281,13 +252,9 @@ namespace WindowsFormsApp1
 
             //Console.WriteLine("------------------------------------------------------------- \n");
 
-
-
             Byte[] data = new Byte[8000];
             
             Int32 bytes = stream.Read(data, 0, data.Length);
-
-
 
             //Console.WriteLine("------------------------------------------------------------- \n");
 
@@ -300,9 +267,7 @@ namespace WindowsFormsApp1
             return deserializeJSON(decodeString);
             //string response = handleResponse(objDesirialized);
 
-
             //Console.WriteLine("------------------------------------------------------------- \n");
         }
     }
-
 }

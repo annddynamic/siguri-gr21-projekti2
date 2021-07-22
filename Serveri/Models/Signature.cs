@@ -11,5 +11,12 @@ namespace Serveri.Models
         public string response { get; set; }
         public string signature { get; set; }
 
+        public Person user { get; set; }
+    
+
+    
     }
+
+
+
 }

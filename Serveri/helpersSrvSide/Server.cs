@@ -11,6 +11,7 @@ using Serveri.Models;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Serveri
 {
@@ -21,6 +22,8 @@ namespace Serveri
         public byte[] publicKey;
         private byte[] CleintDesKey;
         private byte[] CleintIV;
+        private object selected;
+
         public Server(string ip, int port, byte[] publicKey, RSAclass obj)
         {
             IPAddress localAddr = IPAddress.Parse(ip);
@@ -264,46 +267,32 @@ namespace Serveri
 
             //Console.WriteLine(saltedhehash[0] + " " + saltedhehash[1]);
 
-
-
-
-
-
-
-
-            Person p1 = new Person()
+            List<Person> users = new List<Person>()
             {
-                emri = obj.emri,
-                mbiemri = obj.mbiemri,
-                username = obj.username,
-                salt = saltedhehash[0],
-                fjalekalimiHashed = saltedhehash[1],
+                new Person{
+                    emri = obj.emri,
+                    mbiemri = obj.mbiemri,
+                    username = obj.username,
+                    salt = saltedhehash[0],
+                    fjalekalimiHashed = saltedhehash[1],
+                },
 
             };
 
-            // {name}
+            string person = JsonConvert.SerializeObject(users);
+            Console.WriteLine(person);
 
-
-            //Person p1 = new Person()
-            //{
-            //    p = "users",
-            //    users = bw
-
-            //};
-
-            string person = JsonConvert.SerializeObject(p1);
-
-            if (File.Exists(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json"))
+            if (File.Exists(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json"))
             {
-                string text = File.ReadAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json");
-                text = text.Replace("]}", ",\n");
-                File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", text);
-                File.AppendAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", person + "]}");
+                File.AppendAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json", person);
+                string text = File.ReadAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json");
+                text = text.Replace("][", ",");
+                File.WriteAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json", text);
+
             }
-            //{"users:[personi]"}
             else
             {
-                System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "{\"users\":["+ person + "]}");
+                System.IO.File.WriteAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json", person);
                 //System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
             }
 
@@ -337,27 +326,68 @@ namespace Serveri
             return res;
         }
 
+
+        public string hashFjalekalimiperValidim(string fjalekalimi, string salt)
+        {
+            string saltedPw = fjalekalimi + salt;
+
+            byte[] bsaltedPw = Encoding.UTF8.GetBytes(saltedPw);
+
+            SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
+            byte[] byteSaltHashPW = objHash.ComputeHash(bsaltedPw);
+
+
+            return Convert.ToBase64String(byteSaltHashPW);
+            //string[] res = { salt, Convert.ToBase64String(byteSaltHashPW) };
+
+            //return res;
+        }
+
         string login(dynamic obj)
         {
+            //Console.WriteLine(obj);
 
+            LoginModel log = new LoginModel
+            {
+                username = obj.username,
+                fjalekalimi = obj.fjalekalimi
+            };
+            string json = File.ReadAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json");
 
+            var users =deserializeJSON(json);
+            foreach (var user in users)
+            {
+                if(user.username ==log.username)
+                {
 
+                    //Console.WriteLine(user.username);
+                    if (user.fjalekalimiHashed.ToString() == hashFjalekalimiperValidim(log.fjalekalimi, user.salt.ToString()))
+                    {
 
+                        SrvInitial svr = new SrvInitial()
+                        {
+                            response = "OK",
 
+                        };
+                        return JsonConvert.SerializeObject(svr);
+                        break;
+                    }
 
+                }
+            }
 
             SrvInitial sv = new SrvInitial()
             {
-                response = "OK",
+                response = "JOE",
 
             };
-
             return JsonConvert.SerializeObject(sv);
 
-        }
-
-
-
 
         }
+
+
+
+
+    }
 }

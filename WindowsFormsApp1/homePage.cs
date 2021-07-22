@@ -36,10 +36,10 @@ namespace WindowsFormsApp1
                 call = "register",
                 person = new Person()
                 {
-                    emri = "Aasdasdsadndi",
-                    mbiemri = "Dasdasdasdika",
-                    username= "andsdsdssdy",
-                    fjalekalimi = "asd",
+                    emri = "ansdi",
+                    mbiemri = "makareci",
+                    username= "andsidika",
+                    fjalekalimi = "ansdidika",
              
                 }
             };

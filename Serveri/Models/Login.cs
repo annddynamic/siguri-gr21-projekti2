@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 
 namespace Serveri.Models
 {
-    
-   
     [Serializable]
-    public class Person
+    class LoginModel
     {
-        public string emri { get; set; }
-        public string mbiemri { get; set; }
+
         public string username { get; set; }
-        public string salt { get; set; }
-        public string fjalekalimiHashed { get; set; }
+        public string fjalekalimi { get; set; }
+        public string saltedPWfromdb { get; set; }
+        public string saltfromdb { get; set; }
+
 
     }
-
 }

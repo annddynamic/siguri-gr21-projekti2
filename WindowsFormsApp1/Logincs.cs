@@ -33,19 +33,17 @@ namespace WindowsFormsApp1
                 call = "login",
                 data = new Data()
                 {
-                    username = "andsdsdssdy",
-                    fjalekalimi = "asd",
+                    username = "andidika",
+                    fjalekalimi = "ansdidika",
 
                 }
             };
 
             if (this.client.login(asd))
             {
-                //Logincs lg = new Logincs(this.client);
-                //lg.Show();
-                //this.Hide();
+                MessageBox.Show("evev NANE BRE ja qillove");
 
-              
+
             };
 
             

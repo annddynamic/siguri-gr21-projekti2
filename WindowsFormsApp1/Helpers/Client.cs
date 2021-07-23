@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
 
         public void createRSAObj(string key)
         {
-            Console.WriteLine("createRSAObject " + key);
+            //Console.WriteLine("createRSAObject " + key);
             this.objRsa.FromXmlString(key);
         }
 
@@ -79,7 +79,6 @@ namespace WindowsFormsApp1
 
             var srvObj = communicate(json);
 
-            Console.WriteLine("Public Key: " + this.objRsa);
             createRSAObj(srvObj.publicKey.ToString());
 
 
@@ -100,7 +99,6 @@ namespace WindowsFormsApp1
                 call = "keyExchange",
                 desIV = sharedIV,
                 desKeyEnc = encryptedDesKey,
-                test = "Andi"
             };
 
             json = JsonConvert.SerializeObject(req);
@@ -149,28 +147,35 @@ namespace WindowsFormsApp1
             string json = JsonConvert.SerializeObject(req);
             string encryptedJsonCBC = this.DESobj.Encrypt(json);
             
-            Console.WriteLine(this.DESobj.decrypt(encryptedJsonCBC));
             var obj = communicate(encryptedJsonCBC);
 
             string path = @"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\WindowsFormsApp1\NenshkrimiK\verified.xml";
 
-            System.IO.File.WriteAllText(path, obj.signature.ToString());
-
-            XmlDocument objXml = new XmlDocument();
-            objXml.Load(path);
-
-            bool result = VerifyXml(objXml, this.objRsa);
-
-            if (result)
+            if (obj.response.ToString() !="JOE")
             {
-                //File.Delete(path);
-                this.useri = obj.user;
 
-                return true;
-            }
-            else
+                System.IO.File.WriteAllText(path, obj.signature.ToString());
+
+                XmlDocument objXml = new XmlDocument();
+                objXml.Load(path);
+
+                bool result = VerifyXml(objXml, this.objRsa);
+
+                if (result)
+                {
+                    //File.Delete(path);
+                    this.useri = obj.user;
+
+                    return true;
+                }
+                else
+                {
+                   return false;
+                }
+
+            }else
             {
-               return false;
+                return false;
             }
         }
 

@@ -212,7 +212,6 @@ namespace Serveri
 
             if (obj.call == "firstConn")
             {
-                Console.WriteLine("Key: " + getPublicKey());
                 response = getPublicKey();
 
             }
@@ -239,9 +238,10 @@ namespace Serveri
 
         string getPublicKey()
         {
-
+            
             SrvInitial sv = new SrvInitial()
             {
+                response="OK",
                 publicKey = Encoding.UTF8.GetString(this.publicKey),
                 
             };
@@ -260,7 +260,6 @@ namespace Serveri
                 call = obj.call,
                 desIV = obj.desIV,
                 desKeyEnc= obj.desKeyEnc,
-                test = obj.test
             };
 
             byte[] desDecryptedKey = Encoding.Unicode.GetBytes(RSAobj.Decrypt(ob.desKeyEnc));
@@ -277,9 +276,7 @@ namespace Serveri
             SrvInitial sv = new SrvInitial()
             {
                 response="OK",
-                //clientDesKey = this.CleintDesKey,
-                //clientDesIV = this.CleintIV,
-
+           
             };
 
             return JsonConvert.SerializeObject(sv);
@@ -414,7 +411,6 @@ namespace Serveri
 
         string login(dynamic obj)
         {
-            //Console.WriteLine(obj);
 
             LoginModel log = new LoginModel
             {
@@ -424,13 +420,13 @@ namespace Serveri
             string json = File.ReadAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json");
 
             var users =deserializeJSON(json);
-            //Console.WriteLine(users);
+
             foreach (var user in users)
             {
                 if (user.username == log.username)
                 {
                     string path = @"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Nenshkrimi\nenshkrimi.xml";
-                    //Console.WriteLine(user.username);
+
                     if (user.fjalekalimiHashed.ToString() == hashFjalekalimiperValidim(log.fjalekalimi, user.salt.ToString()))
                     {
                         XmlDocument objXml = new XmlDocument();
@@ -499,7 +495,6 @@ namespace Serveri
                         objXml.Save(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Nenshkrimi\personat_nenshkruar.xml");
 
                         string xml = File.ReadAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Nenshkrimi\personat_nenshkruar.xml");
-                        //Console.WriteLine(xml);
 
 
                         SignatureToClient r = new SignatureToClient()
@@ -519,7 +514,7 @@ namespace Serveri
 
                         string responseSignature = JsonConvert.SerializeObject(r);
 
-                        Console.WriteLine(responseSignature);
+                        Console.WriteLine("Signatura e serverit qe i dergohet klientit \n"+responseSignature);
                         return encrypt(responseSignature, this.CleintDesKey, this.CleintIV);
                         
                         break;

@@ -30,14 +30,9 @@ namespace WindowsFormsApp1
             }
             else
             {
-                
+                MessageBox.Show("Gabim ne lidhje");
             }
 
-
-        }
-
-        private void Conn_Load(object sender, EventArgs e)
-        {
 
         }
     }

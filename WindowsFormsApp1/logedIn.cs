@@ -31,10 +31,7 @@ namespace WindowsFormsApp1
             Console.WriteLine(user);
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
+      
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -58,24 +55,15 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("Fatura u insertua me sukses!");
             };
-            
-
-
-            
         }
 
-        private void label3_Click(object sender, EventArgs e)
+       
+
+        private void button2_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+            Logincs hp = new Logincs(this.client);
+            this.Hide();
+            hp.Show();
 
         }
 

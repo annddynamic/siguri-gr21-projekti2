@@ -51,15 +51,15 @@ namespace WindowsFormsApp1
 
             if (isNameValid && ispasswordValid)
             {
-                        loginReq asd = new loginReq()
+                    loginReq asd = new loginReq()
+                    {
+                        call = "login",
+                        data = new Data()
                         {
-                            call = "login",
-                            data = new Data()
-                            {
-                                username = textBox1.Text,
-                                fjalekalimi = textBox2.Text,
-                            }
-                        };
+                            username = textBox1.Text,
+                            fjalekalimi = textBox2.Text,
+                        }
+                    };
 
                     if (this.client.login(asd))
                     {

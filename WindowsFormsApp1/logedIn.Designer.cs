@@ -30,6 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Emri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Mbiemri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -41,12 +45,9 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Emri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Mbiemri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.clientBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource1)).BeginInit();
@@ -71,7 +72,38 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(738, 120);
             this.dataGridView1.TabIndex = 2;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // id
+            // 
+            this.id.HeaderText = "Id";
+            this.id.MinimumWidth = 6;
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 125;
+            // 
+            // Emri
+            // 
+            this.Emri.HeaderText = "Emri";
+            this.Emri.MinimumWidth = 6;
+            this.Emri.Name = "Emri";
+            this.Emri.ReadOnly = true;
+            this.Emri.Width = 125;
+            // 
+            // Mbiemri
+            // 
+            this.Mbiemri.HeaderText = "Mbiemri";
+            this.Mbiemri.MinimumWidth = 6;
+            this.Mbiemri.Name = "Mbiemri";
+            this.Mbiemri.ReadOnly = true;
+            this.Mbiemri.Width = 125;
+            // 
+            // Username
+            // 
+            this.Username.HeaderText = "Username";
+            this.Username.MinimumWidth = 6;
+            this.Username.Name = "Username";
+            this.Username.ReadOnly = true;
+            this.Username.Width = 125;
             // 
             // textBox1
             // 
@@ -81,7 +113,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(124, 34);
             this.textBox1.TabIndex = 3;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox2
             // 
@@ -147,7 +178,6 @@
             this.label3.Size = new System.Drawing.Size(46, 17);
             this.label3.TabIndex = 9;
             this.label3.Text = "Muaji";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // textBox4
             // 
@@ -157,7 +187,6 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(124, 34);
             this.textBox4.TabIndex = 10;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // textBox5
             // 
@@ -192,38 +221,6 @@
             this.label5.TabIndex = 13;
             this.label5.Text = "Vlera nr Euro";
             // 
-            // id
-            // 
-            this.id.HeaderText = "Id";
-            this.id.MinimumWidth = 6;
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Width = 125;
-            // 
-            // Emri
-            // 
-            this.Emri.HeaderText = "Emri";
-            this.Emri.MinimumWidth = 6;
-            this.Emri.Name = "Emri";
-            this.Emri.ReadOnly = true;
-            this.Emri.Width = 125;
-            // 
-            // Mbiemri
-            // 
-            this.Mbiemri.HeaderText = "Mbiemri";
-            this.Mbiemri.MinimumWidth = 6;
-            this.Mbiemri.Name = "Mbiemri";
-            this.Mbiemri.ReadOnly = true;
-            this.Mbiemri.Width = 125;
-            // 
-            // Username
-            // 
-            this.Username.HeaderText = "Username";
-            this.Username.MinimumWidth = 6;
-            this.Username.Name = "Username";
-            this.Username.ReadOnly = true;
-            this.Username.Width = 125;
-            // 
             // clientBindingSource
             // 
             this.clientBindingSource.DataSource = typeof(WindowsFormsApp1.Client);
@@ -232,12 +229,24 @@
             // 
             this.clientBindingSource1.DataSource = typeof(WindowsFormsApp1.Client);
             // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(721, 483);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(103, 34);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "Log Out";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // logedIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.bckg2;
             this.ClientSize = new System.Drawing.Size(836, 529);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox5);
@@ -279,5 +288,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Emri;
         private System.Windows.Forms.DataGridViewTextBoxColumn Mbiemri;
         private System.Windows.Forms.DataGridViewTextBoxColumn Username;
+        private System.Windows.Forms.Button button2;
     }
 }

@@ -43,7 +43,7 @@ namespace WindowsFormsApp1
             string namePattern = @"^[a-zA-Z]+$";
             string passwordPattern = @".{8,}";
             
-            bool isNameValid = Regex.IsMatch(textBox1.Text, namePattern);
+            bool isNameValid = Regex.IsMatch(textBox3.Text, namePattern);
             bool ispasswordValid = Regex.IsMatch(textBox4.Text, passwordPattern);
 
 

@@ -15,7 +15,6 @@ namespace WindowsFormsApp1.Models
         public byte[] desIV { get; set; }
         public  string desKeyEnc { get; set; }
 
-        public string test { get; set; }
 
     }
 }

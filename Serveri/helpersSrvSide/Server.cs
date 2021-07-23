@@ -508,6 +508,7 @@ namespace Serveri
                             signature = xml,
                             user = new Person()
                             {
+                                id = user.id,
                                 emri = user.emri,
                                 mbiemri = user.mbiemri,
                                 username = user.username

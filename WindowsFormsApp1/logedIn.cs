@@ -15,10 +15,6 @@ namespace WindowsFormsApp1
     {
         private Client client;
 
-        private Panel buttonPanel = new Panel();
-        private DataGridView songsDataGridView = new DataGridView();
-        private Button addNewRowButton = new Button();
-        private Button deleteRowButton = new Button();
         public logedIn()
         {
             InitializeComponent();
@@ -30,7 +26,9 @@ namespace WindowsFormsApp1
 
             InitializeComponent();
             this.client = c;
-            this.dataGridView1.Rows.Add("adnit", "gashi", "seven");
+            var user = this.client.getUser();
+            this.dataGridView1.Rows.Add(user.id.ToString(), user.emri.ToString(), user.mbiemri.ToString(), user.username.ToString());
+            Console.WriteLine(user);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -72,6 +70,11 @@ namespace WindowsFormsApp1
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

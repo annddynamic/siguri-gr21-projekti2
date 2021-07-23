@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.Models;
@@ -31,31 +32,50 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            loginReq asd = new loginReq()
+
+            string namePattern = @"^[a-zA-Z]+$";
+            string passwordPattern = @".{8,}";
+
+            bool isNameValid = Regex.IsMatch(textBox1.Text, namePattern);
+            bool ispasswordValid = Regex.IsMatch(textBox2.Text, passwordPattern);
+
+            if (!isNameValid || textBox1.Text == "")
             {
-                call = "login",
-                data = new Data()
-                {
-                    username = textBox1.Text,
-                    fjalekalimi = textBox2.Text,
-
-                }
-            };
-
-            if (this.client.login(asd))
-            {
-
-                MessageBox.Show("Certifikata u verifikua me sukses!");
-                logedIn lg = new logedIn(this.client);
-                lg.Show();
-                this.Hide();
-
+                MessageBox.Show("Please enter a valid name");
             }
-            else
+            if (!ispasswordValid || textBox2.Text == "")
             {
-                MessageBox.Show("Gabim ne username ose password!");
-            };
-        }
+                MessageBox.Show("Unvalid password, please try again!");
+            }
+
+
+            if (isNameValid && ispasswordValid)
+            {
+                        loginReq asd = new loginReq()
+                        {
+                            call = "login",
+                            data = new Data()
+                            {
+                                username = textBox1.Text,
+                                fjalekalimi = textBox2.Text,
+                            }
+                        };
+
+                    if (this.client.login(asd))
+                    {
+
+                        MessageBox.Show("Certifikata u verifikua me sukses!");
+                        logedIn lg = new logedIn(this.client);
+                        lg.Show();
+                        this.Hide();
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Gabim ne username ose password!");
+                    };
+                 }
+            }
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -86,5 +106,12 @@ namespace WindowsFormsApp1
             this.Hide();
 
         }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

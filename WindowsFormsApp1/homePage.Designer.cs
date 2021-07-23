@@ -69,7 +69,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
             this.linkLabel1.LinkColor = System.Drawing.Color.White;
-            this.linkLabel1.Location = new System.Drawing.Point(237, 590);
+            this.linkLabel1.Location = new System.Drawing.Point(268, 591);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(276, 18);
             this.linkLabel1.TabIndex = 16;
@@ -160,6 +160,7 @@
             this.textBox4.PasswordChar = '*';
             this.textBox4.Size = new System.Drawing.Size(199, 54);
             this.textBox4.TabIndex = 24;
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // homePage
             // 

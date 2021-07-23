@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using WindowsFormsApp1.Helpers;
 using System.Text;
 using WindowsFormsApp1.Models;
+using System.Text.RegularExpressions;
 
 namespace WindowsFormsApp1
 {
@@ -28,9 +29,6 @@ namespace WindowsFormsApp1
         }
         private void button1_Click(object sender, EventArgs e)
         {
-
-
-         
             RegisterReq asd = new RegisterReq()
             {
                 call = "register",
@@ -40,17 +38,36 @@ namespace WindowsFormsApp1
                     mbiemri = textBox2.Text,
                     username = textBox3.Text,
                     fjalekalimi = textBox4.Text,
-
                 }
             };
+            string namePattern = @"^[a-zA-Z]+$";
+            string passwordPattern = @".{8,}";
+            
+            bool isNameValid = Regex.IsMatch(textBox1.Text, namePattern);
+            bool ispasswordValid = Regex.IsMatch(textBox4.Text, passwordPattern);
 
 
-            if (this.client.register(asd))
+
+            if (!isNameValid || textBox1.Text == "")
             {
-                Logincs lg = new Logincs(this.client);
-                lg.Show();
-                this.Hide();
-            };
+                MessageBox.Show("Please enter a valid name");
+            }
+            if (!ispasswordValid || textBox4.Text == "")
+            {
+                MessageBox.Show("Unvalid password, please try again!");
+            }
+
+            if(isNameValid && ispasswordValid)
+            {
+                if (this.client.register(asd))
+                {
+                    Logincs lg = new Logincs(this.client);
+                    lg.Show();
+                    this.Hide();
+                };
+            }
+
+
         }
 
         private void homePage_Load(object sender, EventArgs e)
@@ -72,6 +89,11 @@ namespace WindowsFormsApp1
           
         }
 
-       
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

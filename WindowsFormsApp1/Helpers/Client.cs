@@ -60,7 +60,8 @@ namespace WindowsFormsApp1
             return Convert.ToBase64String(this.objRsa.Encrypt(bytePLaintext, true));
 
         }
-     
+
+
         public void createRSAObj(string key)
         {
             Console.WriteLine("createRSAObject " + key);
@@ -127,6 +128,20 @@ namespace WindowsFormsApp1
             }
             return false;
         }
+
+        public  bool registerFatura(faturaRequest asd)
+        {
+            string json = JsonConvert.SerializeObject(asd);
+            string encryptedJsonCBC = this.DESobj.Encrypt(json);
+            var obj = communicate(encryptedJsonCBC);
+
+            if (obj.response.ToString() == "OK")
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         public bool login(loginReq req)
         {

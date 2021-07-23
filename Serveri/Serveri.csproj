@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="helpersSrvSide\InitialRequestClient.cs" />
     <Compile Include="helpersSrvSide\RSAclass.cs" />
+    <Compile Include="Models\Fatura.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\Signature.cs" />

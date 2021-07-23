@@ -230,12 +230,15 @@ namespace Serveri
             }else if(obj.call == "login")
             {
                 response = login(obj.data);
+            }else if(obj.call == "fatura")
+            {
+                response = registerFatura(obj.fatura);
             }
          
                 return response;
         }
 
-        
+
         string getPublicKey()
         {
 
@@ -290,11 +293,7 @@ namespace Serveri
 
             string[] saltedhehash = hashFjalekalimi(obj.fjalekalimi.ToString());
 
-            //Console.WriteLine(saltedhehash[0] + " " + saltedhehash[1]);
-
-
-            
-
+                                   
             List<Person> users = new List<Person>()
             {
                 new Person{
@@ -325,9 +324,8 @@ namespace Serveri
                 System.IO.File.WriteAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json", person);
                 //System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
             }
-
-            /*ile.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\users.json", obj.ToString());*/
             SrvInitial sv = new SrvInitial()
+
             {
                 response = "OK",
            
@@ -339,12 +337,55 @@ namespace Serveri
         }
 
 
+
+        string registerFatura(dynamic obj)
+        {
+            List<Fatura> faturat = new List<Fatura>()
+            {
+                new Fatura{
+                    lloji = obj.lloji,
+                    muaji = obj.muaji,
+                    viti = obj.viti,
+                    vleraEuro = obj.vleraEuro,
+                    vleraPaTVSH = obj.vleraPaTVSH,      
+                },
+
+            };
+            string fatura = JsonConvert.SerializeObject(faturat);
+
+            if (File.Exists(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\faturat.json"))
+            {
+                File.AppendAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\faturat.json", fatura);
+                string text = File.ReadAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\faturat.json");
+                text = text.Replace("][", ",");
+                File.WriteAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\faturat.json", text);
+
+            }
+            else
+            {
+                System.IO.File.WriteAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\faturat.json", fatura);
+                //System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
+            }
+            SrvInitial sv = new SrvInitial()
+
+            {
+                response = "OK",
+
+            };
+
+            string response = JsonConvert.SerializeObject(sv);
+            return encrypt(response, this.CleintDesKey, this.CleintIV);
+        }
+
+
         public string[] hashFjalekalimi(string fjalekalimi)
         {
             string salt = new Random().Next(100000, 1000000).ToString();
             string saltedPw = fjalekalimi + salt;
 
             byte[] bsaltedPw = Encoding.UTF8.GetBytes(saltedPw);
+        
+          
 
             SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
             byte[] byteSaltHashPW = objHash.ComputeHash(bsaltedPw);

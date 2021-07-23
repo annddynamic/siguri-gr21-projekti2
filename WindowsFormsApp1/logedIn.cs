@@ -46,10 +46,12 @@ namespace WindowsFormsApp1
                 call = "fatura",
                 fatura = new Fatura()
                 {
-                    lloji ="fantastik",
-                    viti = "2000",
-                    muaji = "gusht",
-                    vleraPaTVSH = "25",
+                    lloji = textBox1.Text,
+                    viti = textBox2.Text,
+                    muaji = textBox3.Text,
+                    vleraEuro = textBox4.Text ,
+                    vleraPaTVSH = textBox5.Text ,
+                    
                 }
             };
 
@@ -62,6 +64,16 @@ namespace WindowsFormsApp1
 
 
             
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
 

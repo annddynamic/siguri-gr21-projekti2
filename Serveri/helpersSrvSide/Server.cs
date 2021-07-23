@@ -174,8 +174,6 @@ namespace Serveri
 
         }
 
-
-
         private  bool IsValidJson(string strInput)
         {
             if (string.IsNullOrWhiteSpace(strInput)) { return false; }

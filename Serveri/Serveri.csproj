@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\InitialRequestClient.cs" />
-    <Compile Include="helpersSrvSide\RSAclass.cs" />
+    <Compile Include="helpersSrvSide\RSA.cs" />
     <Compile Include="Models\Fatura.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Register.cs" />
@@ -68,6 +68,7 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Nenshkrimi\" />
+    <Folder Include="Server%27sPublicKey\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

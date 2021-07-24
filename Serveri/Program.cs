@@ -12,9 +12,9 @@ public class Program
     {
         Thread t = new Thread(delegate ()
         {
-            RSAclass objrsa = new RSAclass();
+            RSA objrsa = new RSA();
             objrsa.getRsaObj();
-            Server myserver = new Server("127.0.0.1", 13000, objrsa.publicKey, objrsa);
+            Server myserver = new Server("127.0.0.1", 13000, objrsa);
 
         });
         t.Start();

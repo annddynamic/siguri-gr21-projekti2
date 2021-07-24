@@ -20,18 +20,16 @@ namespace Serveri
     class Server
     {
         TcpListener server = null;
-        private RSAclass RSAobj;
-        public byte[] publicKey;
+        private helpersSrvSide.RSA RSAobj;
         private byte[] CleintDesKey;
         private byte[] CleintIV;
         private object selected;
 
-        public Server(string ip, int port, byte[] publicKey, RSAclass obj)
+        public Server(string ip, int port,  helpersSrvSide.RSA obj)
         {
             IPAddress localAddr = IPAddress.Parse(ip);
             server = new TcpListener(localAddr, port);
             server.Start();
-            this.publicKey = publicKey;
             this.RSAobj = obj;
             StartListener();
         }
@@ -64,15 +62,10 @@ namespace Serveri
             int i;
             try
             {
-                //stream.Write(this.publicKey, 0, this.publicKey.Length);
 
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
-                    // te dhenat base 64 string nga kleinti
-                    //  string mesazhin -> bajta
-                    // bajtat -> string64
-                    // string64 -> bajta
-                    // bajta->>>>>>
+                  
                     
                     Console.WriteLine("-------------------------------------------------------------\n");
                     dataBase64 = Encoding.UTF8.GetString(bytes, 0, i);
@@ -238,22 +231,19 @@ namespace Serveri
 
         string getPublicKey()
         {
-            
+
             SrvInitial sv = new SrvInitial()
             {
                 response="OK",
-                publicKey = Encoding.UTF8.GetString(this.publicKey),
                 
             };
             
-
             return JsonConvert.SerializeObject(sv);
         }
 
 
         string keyExchange(dynamic obj)
         {
-
 
             InitialRequestClient ob = new InitialRequestClient
             {
@@ -268,10 +258,8 @@ namespace Serveri
             this.CleintIV = ob.desIV;
             
 
-
             Console.WriteLine("Prej serverit Celesi " + BitConverter.ToString(this.CleintDesKey));
             Console.WriteLine("Prej serverit  IV " + BitConverter.ToString(this.CleintIV));
-
 
             SrvInitial sv = new SrvInitial()
             {
@@ -288,7 +276,6 @@ namespace Serveri
 
             string[] saltedhehash = hashFjalekalimi(obj.fjalekalimi.ToString());
 
-                                   
             List<Person> users = new List<Person>()
             {
                 new Person{
@@ -319,8 +306,8 @@ namespace Serveri
                 System.IO.File.WriteAllText(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Data\users.json", person);
                 //System.IO.File.WriteAllText(@"C:\Users\alber\Desktop\Siguri Projekti2\Serveri\Data\" + "users.json", "[ \n"+ person + "]");
             }
-            SrvInitial sv = new SrvInitial()
 
+            SrvInitial sv = new SrvInitial()
             {
                 response = "OK",
            
@@ -380,11 +367,9 @@ namespace Serveri
 
             byte[] bsaltedPw = Encoding.UTF8.GetBytes(saltedPw);
         
-          
 
             SHA1CryptoServiceProvider objHash = new SHA1CryptoServiceProvider();
             byte[] byteSaltHashPW = objHash.ComputeHash(bsaltedPw);
-
 
 
             string[] res= { salt, Convert.ToBase64String(byteSaltHashPW) };

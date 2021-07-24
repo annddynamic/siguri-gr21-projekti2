@@ -1,14 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Serveri.helpersSrvSide
 {
-    class RSAclass
+    class RSA
     {
         private RSACryptoServiceProvider objRSA;
-        public byte[] publicKey;
-        
+        private const string path = @"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Server'sPublicKey\key.xml";        
 
         public RSACryptoServiceProvider getRsaObj()
         {
@@ -16,10 +16,14 @@ namespace Serveri.helpersSrvSide
             {
                 try
                 {
+
                     this.objRSA = new RSACryptoServiceProvider();
-                    this.publicKey = Encoding.UTF8.GetBytes(this.objRSA.ToXmlString(false));
-                    //string key = this.objRSA.ToXmlString(false);
-                    //Console.WriteLine(key);
+
+                    string strXmlParams = this.objRSA.ToXmlString(false);
+                    StreamWriter sw = new StreamWriter(path);
+                    sw.Write(strXmlParams);
+                    sw.Close();
+                   
 
                 }
                 catch (Exception e)
@@ -39,14 +43,6 @@ namespace Serveri.helpersSrvSide
             return Convert.ToBase64String(this.objRSA.Encrypt(bytePLaintext, true));
 
         }
-
-        //public string Decrypt_(string cypherText)
-        //{
-        //    this.objRSA = getRsaObj();
-        //    byte[] byteCyphetText = Convert.FromBase64String(cypherText);
-        //    return Encoding.UTF8.GetString(this.objRSA.Decrypt(byteCyphetText, true));
-        //}
-
 
         public string Decrypt(string cypherText)
         {

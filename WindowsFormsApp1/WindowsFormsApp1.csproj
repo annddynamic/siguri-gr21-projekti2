@@ -58,7 +58,6 @@
     <Compile Include="Conn.Designer.cs">
       <DependentUpon>Conn.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Serialization.cs" />
     <Compile Include="homePage.cs">
       <SubType>Form</SubType>
     </Compile>

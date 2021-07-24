@@ -17,7 +17,7 @@ namespace WindowsFormsApp1
 {
     public class Client
     {
-        private  TcpClient client;
+        private TcpClient client;
         private String address;
         private Int32 port;
         private RSACryptoServiceProvider objRsa=new RSACryptoServiceProvider();
@@ -62,11 +62,7 @@ namespace WindowsFormsApp1
         }
 
 
-        public void createRSAObj(string key)
-        {
-            //Console.WriteLine("createRSAObject " + key);
-            this.objRsa.FromXmlString(key);
-        }
+
 
         public bool keyExchange()
         {
@@ -79,7 +75,15 @@ namespace WindowsFormsApp1
 
             var srvObj = communicate(json);
 
-            createRSAObj(srvObj.publicKey.ToString());
+            if (srvObj.response.ToString() == "OK")
+            {
+                StreamReader sr = new StreamReader(@"C:\Users\BUTON\Desktop\Sigjuri\siguri-gr21-projekti2\Serveri\Server'sPublicKey\key.xml");
+
+                string strXmlParams = sr.ReadToEnd();
+                sr.Close();
+                this.objRsa.FromXmlString(strXmlParams);
+
+            }
 
 
             DESCryptoServiceProvider obj = this.DESobj.getDesObj();
@@ -106,14 +110,15 @@ namespace WindowsFormsApp1
 
             var response = communicate(json);
 
-            return true;
+            if(response.response.ToString()=="OK")
+                return true;
+            return false;
         }
 
-        public bool register(RegisterReq  preg)
+        public bool register(RegisterReq  regReq)
         {
-            // serializimi obj -> string
-            // t dhenat i dergon si json (string)
-            string  json = JsonConvert.SerializeObject(preg);
+            
+            string  json = JsonConvert.SerializeObject(regReq);
             string encryptedJsonCBC = this.DESobj.Encrypt(json);
 
             Console.WriteLine(encryptedJsonCBC);
@@ -262,15 +267,11 @@ namespace WindowsFormsApp1
             NetworkStream stream = this.client.GetStream();
             string responsebase64 = String.Empty;
 
-            //Console.WriteLine("-------------------Pjesa e procesimit te kerkeses nga klienti------------------------------------------\n");
 
             string encodedStr = Convert.ToBase64String(Encoding.UTF8.GetBytes(message));
-            //Console.WriteLine("Kerkesa e klientit: \n" + message);
-            //Console.WriteLine("encodedbase64 string: \n" + encodedStr);
 
             stream.Write(Encoding.UTF8.GetBytes(encodedStr), 0, Encoding.UTF8.GetBytes(encodedStr).Length);
 
-            //Console.WriteLine("------------------------------------------------------------- \n");
 
             Byte[] data = new Byte[8000];
             

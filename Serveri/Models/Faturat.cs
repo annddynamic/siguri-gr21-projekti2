@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Serveri.Models
 {
-
-    [Serializable]
-    class SrvInitial
+    public class Faturat
     {
         public string response { get; set; }
-       
+        public dynamic faturaRows { set; get; }
     }
 }

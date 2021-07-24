@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
                     if (this.client.login(asd))
                     {
 
-                        MessageBox.Show("Certifikata u verifikua me sukses!");
+                        MessageBox.Show("Nenshkrimi u verifikua me sukses!");
                         logedIn lg = new logedIn(this.client);
                         lg.Show();
                         this.Hide();
